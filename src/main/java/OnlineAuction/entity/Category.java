@@ -2,10 +2,8 @@ package OnlineAuction.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,11 +17,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private int idFatherCategoryes;
+    private int idFatherCategories;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "category")
+    private List<Picture> pictures;
 
 
     public Category(String name) {
         this.name = name;
-        this.idFatherCategoryes = 0;
+        this.idFatherCategories = 0;
     }
 }

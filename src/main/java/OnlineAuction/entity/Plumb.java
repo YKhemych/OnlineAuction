@@ -3,11 +3,9 @@ package OnlineAuction.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,12 +19,15 @@ public class Plumb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Picture picture;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User owner;
-
     private int minPrise;
-
     private Date currentDate;
     private Date dateOfEnd;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "plumb")
+    private List<Bet> bets;
 }

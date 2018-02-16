@@ -3,10 +3,7 @@ package OnlineAuction.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by user on 16.02.2018.
@@ -23,6 +20,7 @@ public class DescribeOfUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User user;
     private String name;
     private String surname;

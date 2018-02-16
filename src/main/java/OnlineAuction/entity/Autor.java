@@ -2,10 +2,8 @@ package OnlineAuction.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +20,7 @@ public class Autor {
     private String surname;
     private String biography;
     private String photo;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "autor")
+    private List<Picture> pictures;
 
 }
