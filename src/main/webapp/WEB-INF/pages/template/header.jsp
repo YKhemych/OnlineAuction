@@ -25,3 +25,79 @@
     <link rel="stylesheet" href="/css/additionalStyle.css">
 </head>
 <body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid background-white">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 row max-width-">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <!-- <span class="sr-only">Навигация</span> -->
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/" class="navbar-brand ">Свій в світі покупок</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-menu-li">
+                            <a id="basketButton" href="" data-toggle="modal" data-target="#basket" >
+                                <span class="glyphicon glyphicon-shopping-cart col-md-3 padding-0"></span>
+                                <p class="col-md-9 padding-0-10px">Корзина</p>
+                            </a>
+                        </li>
+                        <sec:authorize access="!isAuthenticated()">
+                            <li class="nav-menu-li">
+                                <a href="" class="" data-toggle="modal" data-target="#regictration">
+                                    <span class="glyphicon glyphicon-list-alt col-md-3 padding-0"></span>
+                                    <p class="col-md-9 padding-0-10px">Реєстрація</p>
+                                </a>
+                                <%@include file="registration.jsp"%>
+                            </li>
+                            <li class="nav-menu-li">
+                                <a href="" class="" data-toggle="modal" data-target="#login">
+                                    <span class="glyphicon glyphicon-log-in col-md-3 padding-0"></span>
+                                    <p class="col-md-9 padding-0-10px">Увійти</p>
+                                </a>
+                                <%@include file="login.jsp"%>
+                            </li>
+                        </sec:authorize>
+                        <sec:authorize access="isAuthenticated()">
+                            <li class="nav-menu-li">
+                                <a href= <sec:authorize access="hasRole('ROLE_USER')"> "/userPage" </sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')" var="roleAdmin">"/admin/adminPage"</sec:authorize> >
+                                <span class="glyphicon glyphicon-user col-md-3 padding-0"></span>
+                                <p id="registeredUserName" class="col-md-9 padding-0-10px"><sec:authentication property="principal.username" /></p>
+                                </a>
+                            </li>
+                            <li class="nav-menu-li"><a id="exitUser" href="/logout">
+                                <span class="glyphicon glyphicon-log-out col-md-3 padding-0"></span>
+                                <p class="col-md-9 padding-0-10px">Вийти</p>
+                            </a> </li>
+                        </sec:authorize>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="dropdown float-left">
+                        <a id="mainCategoryButton" role="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                            Каталог аксесуарів <span class="caret"></span>
+                        </a>
+
+                    </div>
+
+
+                    <div class="input-group navbar-right col-md-6">
+                        <%--<input type="text" class="form-control border-red background-white padding-left-20px" >--%>
+                        <select class="js-example-basic-multiple form-control"
+                                multiple="multiple" onchange="window.location.href = this.options[this.selectedIndex].value">
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
