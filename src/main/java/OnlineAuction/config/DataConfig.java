@@ -35,7 +35,7 @@ public class DataConfig {
     public DataSource dataSource(){
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/onlineauction");
+        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/OnlineAuction");
         hikariConfig.setUsername("root");
         hikariConfig.setPassword("root");
 
@@ -68,7 +68,7 @@ public class DataConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
         factoryBean.setJpaVendorAdapter(vendorAdapter());
-        factoryBean.setPackagesToScan("jv.entity");
+        factoryBean.setPackagesToScan("OnlineAuction.entity");
         Properties properties = new Properties();
         properties.put("hibernate.hbm2ddl.auto", "update");
         factoryBean.setJpaProperties(properties);

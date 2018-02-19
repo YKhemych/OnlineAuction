@@ -23,7 +23,7 @@ public class Picture {
     private String size;
     private Date year;
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    private Autor autor;
+    private Author author;
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Category category;

@@ -23,7 +23,7 @@ public class Plumb {
     private Picture picture;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    private User owner;
+    private User user;
     private int minPrise;
     private Date currentDate;
     private Date dateOfEnd;

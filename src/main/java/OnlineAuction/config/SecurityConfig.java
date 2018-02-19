@@ -16,9 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- * Created by user on 16.02.2018.
- */
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan("OnlineAuction.*")

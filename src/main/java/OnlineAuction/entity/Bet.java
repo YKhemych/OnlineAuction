@@ -1,10 +1,17 @@
 package OnlineAuction.entity;
 
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 import javax.persistence.*;
 
-/**
- * Created by user on 16.02.2018.
- */
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Bet {
 
     @Id

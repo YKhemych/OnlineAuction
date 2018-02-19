@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="login" class="modal fade" tabindex="-1">
     <div class="modal-dialog ">
         <div class="modal-content background-dark-grey color-white">
