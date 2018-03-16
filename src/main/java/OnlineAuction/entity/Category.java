@@ -1,5 +1,6 @@
 package OnlineAuction.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Category {
     private int id;
     private String name;
     private int idFatherCategories;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "category")
     private List<Picture> pictures;
 
@@ -26,5 +27,14 @@ public class Category {
     public Category(String name) {
         this.name = name;
         this.idFatherCategories = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", idFatherCategories=" + idFatherCategories +
+                '}';
     }
 }

@@ -49,28 +49,29 @@ $('#registerButton').click(function () {
 $('#loginButton').click(function () {
     var $form = $('#loginform');
     $form.submit();
-
-
 });
 
 var numbOfClicksToTheMainCategory = 0;
 
 $('#mainCategoryButton').click(function () {
     numbOfClicksToTheMainCategory++;
+    console.log("hello!!!");
+    console.log(numbOfClicksToTheMainCategory);
     if (numbOfClicksToTheMainCategory==1) {
         $.ajax({
             url: '/allCategory',
             type: 'get',
             success: function (result) {
-
-                $('#mainCategoryButton').parent().append($('<ul/>', {id: 'mainCategoryMenu', class: 'dropdown-menu multi-level'}));
+                console.log(result.length);
+                $('#mainCategoryButton').parent().append($('<div/>', {id: 'mainCategoryMenu', class: 'dropdown-menu multi-level'}));
 
                 for (var i = 0; i < result.length; i++) {
-                    if (result[i].idFatherCategoryes == 0){
+                    if (result[i].idFatherCategories == 0){
+                        console.log("0");
                         $('#mainCategoryMenu').append($('<li/>', {id: 'id'+`${result[i].id}`}));
                         $('#mainCategoryMenu').children().last().append($('<a/>', {
                             href: "/productsWithCategory-" + `${result[i].id}` + "-Page-0",
-                            class: "linkCategory",
+                            class: "linkCategory padding-5px",
                             text: `${result[i].name}`,
                             // click: linkProductCategory
                         }));
@@ -80,7 +81,7 @@ $('#mainCategoryButton').click(function () {
                 $('#mainCategoryMenu').children().each(function createSubCategory() {
                     var bufUl=0;
                     for (var i = 0; i < result.length; i++) {
-                        if ($(this).attr("id") == ('id'+ result[i].idFatherCategoryes)){
+                        if ($(this).attr("id") == ('id'+ result[i].idFatherCategories)){
                             bufUl++;
                             if (bufUl == 1){
                                 $(this).append($('<ul/>', {class: "dropdown-menu"}));
@@ -102,7 +103,7 @@ $('#mainCategoryButton').click(function () {
                     $(this).children().last().children().each(function createSubCategory() {
                         var bufUl=0;
                         for (var i = 0; i < result.length; i++) {
-                            if ($(this).attr("id") == ('id'+ result[i].idFatherCategoryes)){
+                            if ($(this).attr("id") == ('id'+ result[i].idFatherCategories)){
                                 bufUl++;
                                 if (bufUl == 1){
                                     $(this).append($('<ul/>', {class: "dropdown-menu"}));
@@ -123,7 +124,7 @@ $('#mainCategoryButton').click(function () {
 
             },
             error: function () {
-                alert("error");
+                alert("error !!!!!!!!!!!!");
             }
         });
     };
@@ -133,7 +134,7 @@ $('#mainCategoryButton').click(function () {
 
 $(document).ready(function selectProduct() {
     $('.js-example-basic-multiple').select2({
-        placeholder: "Пошук по крамниці...",
+        placeholder: "Пошук по аукціону...",
     });
 
     // $.ajax({
@@ -147,7 +148,7 @@ $(document).ready(function selectProduct() {
     //             n++;
     //         });
     //         $('.js-example-basic-multiple').select2({
-    //             placeholder: "Пошук по крамниці...",
+    //             placeholder: "Пошук по аукціону...",
     //             data: products
     //         });
     //     },

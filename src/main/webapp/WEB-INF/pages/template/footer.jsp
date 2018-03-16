@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
+<div class="col-md-12 background-dark-grey border-top-red padding-bottom-50px" style="height: 200px">
+</div>
 
 
 <script src="/js/main.js"></script>
