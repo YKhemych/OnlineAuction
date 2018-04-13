@@ -93,8 +93,8 @@
     border-top: 2px solid #f6f6f6;
 }
 
-.border-bottom-blond-grey{
-    border-bottom: 2px solid #f6f6f6;
+.border-bottom-middle-grey{
+    border-bottom: 1px solid #838386;
 }
 
 .border-dark-grey{
@@ -332,6 +332,10 @@
 
 .color-red{
     color: #ff3366;
+}
+
+.color-green{
+    color: #11b683;
 }
 
 .color-white{
