@@ -35,7 +35,7 @@ public class WebInit implements WebApplicationInitializer {
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
         registration.setMultipartConfig(
-                new MultipartConfigElement("", 1000000, 1000000, 1000000)
+                new MultipartConfigElement("", 2000000, 2000000, 2000000)
         );
 
 

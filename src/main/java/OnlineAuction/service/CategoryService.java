@@ -12,4 +12,5 @@ public interface CategoryService {
     void renameCategory(int id, String newName);
     void changeIdFatherCategory(int id, int newIdFatherCategories);
     void delete(int id);
+    Category findCategoryByName(String name);
 }

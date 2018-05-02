@@ -5,6 +5,7 @@ import OnlineAuction.dao.AuthorDAO;
 import OnlineAuction.entity.Author;
 import OnlineAuction.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +22,6 @@ public class AuthorServiceImpl implements AuthorService {
         authorDAO.save(author);
     }
 
-    public void delete(int id) {
-        authorDAO.delete(id);
-    }
-
     public Author findOne(int id) {
         return authorDAO.findOne(id);
     }
@@ -32,4 +29,21 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> findAll() {
         return authorDAO.findAll();
     }
+
+    public List<Author> findAllPageable(Pageable pageRequest) {
+        return authorDAO.findAllPopular(pageRequest);
+    }
+
+    public int countAuthors() {
+        return authorDAO.countAuthors();
+    }
+
+    public void removeAuthor(int id) {
+        authorDAO.removeAuthor(id);
+    }
+
+    public Author findAuthorByName(String name) {
+        return authorDAO.findAuthorByName(name);
+    }
+
 }

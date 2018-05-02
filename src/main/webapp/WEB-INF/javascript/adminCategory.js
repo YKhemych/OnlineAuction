@@ -34,7 +34,7 @@ function createCategoryTable() {
     $('#categoryTable').append($('<thead/>',{id: "categoryThead"}));
     $('#categoryThead').append($('<tr/>',{class: "tr"}));
     $('#categoryThead tr').append("<th>Id</th>");
-    $('#categoryThead tr').append("<th>Ім'я категорії</th>");
+    $('#categoryThead tr').append("<th>Ім'я розділу</th>");
     $('#categoryThead tr').append("<th>Id бат/кат</th>");
     $('#categoryTable').append($('<tbody/>',{id: "categoryTbody"}));
 
@@ -65,8 +65,50 @@ function createCategoryTable() {
             alert("error !!!!!!!!!!!!");
         }
     });
-};
+}
+
 $('#category').click(createCategoryTable);
+
+function createConfirmedPlumbTable() {
+    $('#confirmedPlumb').attr("disabled", "true");
+    var $workspace = $('#workspace');
+    $('#confirmedPlumbDiv').remove();
+
+
+    $workspace.append($('<div/>',{id:"confirmedPlumbDiv", class: "row margin-top-10px padding-top-10px border-blond-grey"}));
+
+    $('#confirmedPlumbDiv').append($('<div/>',{id:"confirmedPlumbDivTable", class: "col-md-11"}));
+    $('#confirmedPlumbDiv').append($('<div/>',{id:"confirmedPlumbDivClose", class: "col-md-1"}));
+    $('#confirmedPlumbDivClose').append($('<button/>',{id: "closeConfirmedPlumbDiv", class: "close",text: "X", onclick: "closeConfirmedPlumbDiv()"}));
+    $('#confirmedPlumbDivTable').append($('<table/>',{id: "confirmedPlumbTable", class: "table"}));
+    $('#confirmedPlumbTable').append($('<thead/>',{id: "confirmedPlumbThead"}));
+    $('#confirmedPlumbThead').append($('<tr/>',{class: "tr"}));
+    $('#confirmedPlumbThead tr').append("<th>Id</th>");
+    $('#confirmedPlumbThead tr').append("<th>Картина</th>");
+    $('#confirmedPlumbThead tr').append("<th>Ім'я власника</th>");
+    $('#confirmedPlumbTable').append($('<tbody/>',{id: "confirmedPlumbTbody"}));
+
+    $.ajax({
+        url: '/plumbWithoutConfirmed',
+        type: 'get',
+        success : function (result) {
+            $(result).each(function () {
+                console.log(this.picture);
+                var picture = this.picture;
+                var user = this.user;
+                $('#confirmedPlumbTbody').append($('<tr/>', {id: "confirmedPlumbId" + this.id}));
+                $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{class: "confirmedPlumbId", text: `${this.id}`}));
+                $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{id:"tdForPictureName"+ this.id}));
+                $("#tdForPictureName" + this.id).append($('<a/>',{href:"/plumb" + this.id, class:"color-red", text: `${picture.name}`}));
+                $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{id: "tdForOwnerName" + this.id, text:`${user.username}`}));
+            });
+        },
+        error : function () {
+            alert("error !!!!!!!!!!!!");
+        }
+    });
+}
+$('#confirmedPlumb').click(createConfirmedPlumbTable);
 
 ///////////////////////////
 
@@ -90,6 +132,12 @@ function closeCategoryDiv() {
     console.log("closeDiv");
 }
 
+function closeConfirmedPlumbDiv() {
+    $('#confirmedPlumbDiv').remove();
+    $('#confirmedPlumb').removeAttr("disabled");
+    console.log("closeDiv");
+}
+
 function saveCategory() {
     console.log("hello111");
     var categoryName = $('#categoryName').val();
@@ -103,7 +151,6 @@ function saveCategory() {
         contentType: 'application/json',
         data : jsonCategorySave,
         success : function () {
-            alert("ok");
             createCategoryTable();
         },
         error : function () {

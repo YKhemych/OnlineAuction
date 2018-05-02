@@ -2,6 +2,7 @@ package OnlineAuction.dao;
 
 
 import OnlineAuction.entity.Category;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,12 @@ public interface CategoryDAO extends JpaRepository<Category, Integer> {
 
     @Query("from Category c where c.idFatherCategories = :idFatherCategory")
     List<Category> findAllWithIdFatherCategory(@Param("idFatherCategory") int idFatherCategory);
+
+    @Modifying
+    @Query("delete from Category c where c.id = :removeId")
+    void removeCategory(@Param("removeId") int id);
+
+    @Query("from Category c where  c.name = :name")
+    Category findCategoryByName(@Param("name")String name);
 }
+

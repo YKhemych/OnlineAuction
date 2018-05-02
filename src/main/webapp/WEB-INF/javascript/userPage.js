@@ -1,10 +1,10 @@
-/**
- * Created by user on 26.07.2017.
- */
+
 var $confirmEditDeliveryAddress = $('<button/>', {id: "confirmEditDeliveryAddress", class: "btn btn-danger margin-0-10", text: "Підтвердити"});
 var $cancelEditDeliveryAddress = $('<a/>', { href: "/userPage"});
 $cancelEditDeliveryAddress.append($('<button/>',{id: "cancelEditDeliveryAddress", class: "btn btn-danger margin-0-10", text: "Відмінити"}));
 var oldName, oldSurname, oldCountryAndCity, oldStreetAndZipCode, oldPhoneOfUser, oldEmail;
+var randomCode;
+
 
 $('#editDeliveryAddress').click(function () {
     $('#editDeliveryAddress').remove();
@@ -76,21 +76,22 @@ $confirmEditDeliveryAddress.click(function () {
 $('#substitutePassword').click(function () {
     $('#substitutePassword').remove();
     // console.log($('#mainCharacteristics').height() * 2);
-    $('#mainCharacteristics').css("height", $('#mainCharacteristics').height() * 4);
-    var randomCode = Math.random().toString(36).slice(2, 8);
-    $('#mainCharacteristics').append($('<p/>', {text: "На ваш e-mail адрес надіслано лист з кодом підтвердження!!!"}));
-    $('#mainCharacteristics').append($('<input>', {type: "text", class: "col-md-2", placeholder: "Confirmation code"}));
-    $('#mainCharacteristics').append($('<p/>', {class: "col-md-12 padding-top-10px", text: "Новий пароль"}));
-    $('#mainCharacteristics').append($('<div/>', {class: "col-md-12 padding-0"}));
-    $('#mainCharacteristics').children().last().append($('<input>', {type: "text", class: "col-md-2", placeholder: "New password"}));
-    $('#mainCharacteristics').children().last().append($('<input>', {type: "text", class: "col-md-2 margin-left-20px", placeholder: "Confirm new password"}));
-    $('#mainCharacteristics').append($('<button/>', {id: "confirmSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px", text: "Підтвердити"}));
-    $('#mainCharacteristics').append($('<a/>', {href: "/userPage"}));
-    $('#mainCharacteristics').children().last().append($('<button/>',{id: "cancelSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px margin-left-20px", text: "Відмінити"}));
+    $('#mainCharacteristics').css("height", $('#mainCharacteristics').height() * 3);
+    randomCode = Math.random().toString(36).slice(2, 8);
+    $('#mainCharacteristics').append($('<div/>', {id: "activeChangePassword"}));
+    $('#activeChangePassword').append($('<p/>', {text: "На ваш e-mail адрес надіслано лист з кодом підтвердження!!!"}));
+    $('#activeChangePassword').append($('<input>', {id:"confirmationCode", type: "text", class: "col-md-2", placeholder: "Confirmation code"}));
+    $('#activeChangePassword').append($('<p/>', {class: "col-md-12 padding-top-10px", text: "Новий пароль"}));
+    $('#activeChangePassword').append($('<div/>', {class: "col-md-12 padding-0"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "newPassword", type: "text", class: "col-md-2", placeholder: "New password"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "confirmNewPassword", type: "text", class: "col-md-2 margin-left-20px", placeholder: "Confirm new password"}));
+    $('#activeChangePassword').append($('<button/>', {id: "confirmSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px", text: "Підтвердити", onclick: "confirmEditPasword()"}));
+    $('#activeChangePassword').append($('<a/>', {href: "/userPage"}));
+    $('#activeChangePassword').children().last().append($('<button/>',{id: "cancelSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px margin-left-20px", text: "Відмінити"}));
     console.log(randomCode);
-    var email = $('#userEmail').html();
+    var userName = $('#userLogin').html();
     $.ajax({
-        url: '/sendConfirmationCodeOn-' + email,
+        url: '/sendConfirmationCodeTo-' + userName,
         type: 'post',
         contentType: 'text/plain',
         data : randomCode,
@@ -135,4 +136,35 @@ function editEmailAddress() {
             alert("!!!!");
         }
     });
+}
+
+function confirmEditPasword() {
+    var userLogin = $('#userLogin').html();
+    var confirmationCode = $('#confirmationCode').val();
+    var newPassword = $('#newPassword').val();
+    var confirmNewPassword = $('#confirmNewPassword').val();
+    if (randomCode == confirmationCode){
+        if (newPassword == confirmNewPassword && newPassword != ""){
+            $.ajax({
+                url: '/editPassword-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : newPassword,
+                success : function () {
+                    $('#activeChangePassword').remove();
+                    $('#messageArea').remove();
+                    $('#mainCharacteristics').css("height", $('#mainCharacteristics').height() / 2.4);
+                    $('#mainCharacteristics').append($('<p/>', {class: "padding-left-10px", text: "Пароль змінено!!!"}));
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+        } else {
+            $('#messageArea').remove();
+            $('#mainCharacteristics').append($('<p/>', {id: "messageArea", class: "color-red margin-top-5px", text: "Паролі не збігаються"}));
+        }
+    }else{
+        $('#mainCharacteristics').append($('<p/>', {id: "messageArea", class: "color-red margin-top-5px", text: "Код підтвердження не коректний"}));
+    }
 }

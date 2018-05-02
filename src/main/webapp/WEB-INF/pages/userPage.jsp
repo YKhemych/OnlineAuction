@@ -7,9 +7,9 @@
     <div class="row centered padding-top-30px">
         <div class="col-md-2 col-md-offset-1">
             <ul class="text-align-center nav ">
-                <li> <button id="main" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none hover-back-gren">ГОЛОВНА</button> </li>
-                <li> <button id="myPlumbs" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none hover-back-gren">МОЇ ЛОТИ</button> </li>
-                <li> <button id="createPlumb" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none  hover-back-gren">СТВОРИТИ ЛОТ</button> </li>
+                <li> <a id="main" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">ГОЛОВНА</a> </li>
+                <li> <a id="myPlumbs" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">МОЇ ЛОТИ</a> </li>
+                <li> <a id="createPlumb" href="/createPlumb" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">СТВОРИТИ ЛОТ</a> </li>
             </ul>
         </div>
         <div id="worksheet" class="col-md-8">
@@ -18,7 +18,7 @@
                     <p class="float-right"> <a id="editEmail" class="color-red margin-0-10"> Редагувати </a></p>
                     <p class="float-left margin-0-10"> Логін: </p> <p id="userLogin"><sec:authentication property="principal.username"/></p>
                     <div id="divForEmail">
-                        <p class="float-left margin-0-10"> Електронна пошта: </p> <p id="userEmail" class=""> <sec:authentication property="principal.email"/></p>
+                        <p class="float-left margin-0-10"> Електронна пошта: </p> <p id="userEmail" class=""><sec:authentication property="principal.email"/></p>
                     </div>
                     <a id="substitutePassword" class="color-red margin-0-10"> Змінити пароль </a>
                 </div>

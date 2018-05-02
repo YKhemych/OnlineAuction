@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
     @Autowired
     UserDAO userDAO;
-
     @Autowired
     PasswordEncoder passwordEncoder;
+
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.save(user);
@@ -35,11 +35,24 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userDAO.findOne(id);
     }
 
+    public User findByName(String name) {
+        return userDAO.findByName(name);
+    }
+
     public List<User> findAll() {
         return userDAO.findAll();
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDAO.findByUsername(username);
+    }
+
+    public void editEmailAddress(String userName, String email) {
+        userDAO.editEmailAddress(userName, email);
+    }
+
+    public void changePassword(String userName, String newPassword) {
+        String password = passwordEncoder.encode(newPassword);
+        userDAO.changePassword(userName, password);
     }
 }

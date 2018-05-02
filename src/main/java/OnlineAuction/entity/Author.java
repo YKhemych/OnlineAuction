@@ -1,6 +1,5 @@
 package OnlineAuction.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,10 +17,19 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String surname;
+    @Column(length = 2550)
     private String biography;
     private String photo;
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "author")
     private List<Picture> pictures;
 
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", biography='" + biography + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }

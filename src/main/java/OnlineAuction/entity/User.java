@@ -1,6 +1,7 @@
 package OnlineAuction.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +14,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 public class User implements UserDetails {
 
     @Id
@@ -23,13 +22,13 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     private DescribeOfUser describeOfUser;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Plumb> plumbs;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Bet> bets;
 
@@ -71,5 +70,95 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDescribeOfUser(DescribeOfUser describeOfUser) {
+        this.describeOfUser = describeOfUser;
+    }
+
+    public void setPlumbs(List<Plumb> plumbs) {
+        this.plumbs = plumbs;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public DescribeOfUser getDescribeOfUser() {
+        return describeOfUser;
+    }
+
+    public List<Plumb> getPlumbs() {
+        return plumbs;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

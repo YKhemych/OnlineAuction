@@ -10,18 +10,15 @@
             </div>
 
 
-            <div class="col-md-2 padding-bottom-10px">
+            <div class="col-md-3 padding-bottom-10px">
                 <ul class="text-align-center nav ">
-                    <li> <button id="category" class="col-md-12 btn btn-danger margin-top-10px outline-none">Категорії</button> </li>
+                    <li> <a id="category" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">Розділи</a> </li>
+                    <li> <a id="confirmedPlumb" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">Підтвердження лотів</a> </li>
+                    <li> <a id="createAuthor" href="/admin/createAuthor" class="col-md-12 btn margin-top-10px border-radius-90px background-red color-white outline-none">Додати автора</a> </li>
                 </ul>
 
             </div>
-            <div id="workspace" class="col-md-10 padding-bottom-10px">
-
-                <form id="formForSaveSlide" action="/create/saveStockSlide" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                </form>
-
+            <div id="workspace" class="col-md-9 padding-bottom-10px">
 
             </div>
 

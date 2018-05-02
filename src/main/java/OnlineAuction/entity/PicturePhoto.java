@@ -30,7 +30,7 @@ public class PicturePhoto{
 
     @Override
     public String toString() {
-        return "PicturePhoto{" +
+        return "PicturePhotoDAO{" +
                 "id=" + id +
                 ", photo='" + photo + '\'' +
                 '}';

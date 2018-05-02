@@ -70,10 +70,9 @@ $('#mainCategoryButton').click(function () {
                         console.log("0");
                         $('#mainCategoryMenu').append($('<li/>', {id: 'id'+`${result[i].id}`}));
                         $('#mainCategoryMenu').children().last().append($('<a/>', {
-                            href: "/productsWithCategory-" + `${result[i].id}` + "-Page-0",
+                            href: "/plumbs/category" + `${result[i].id}` + "/page0",
                             class: "linkCategory padding-5px",
                             text: `${result[i].name}`,
-                            // click: linkProductCategory
                         }));
                     }
                 }
@@ -86,13 +85,11 @@ $('#mainCategoryButton').click(function () {
                             if (bufUl == 1){
                                 $(this).append($('<ul/>', {class: "dropdown-menu"}));
                                 $(this).attr("class", "dropdown-submenu");
-                                // $(this).children().first().attr("tabindex", "-1");
                             }
                             $(this).children().last().append($('<li/>', {id: 'id'+`${result[i].id}`}));
                             $(this).children().last().children().last().append($('<a/>', {
-                                href: "/productsWithCategory-" + `${result[i].id}` + "-Page-0",
+                                href: "/plumbs/category" + `${result[i].id}` + "/page0",
                                 text: `${result[i].name}`,
-                                // click: linkProductCategory
                             }));
                         }
                     }
@@ -108,13 +105,11 @@ $('#mainCategoryButton').click(function () {
                                 if (bufUl == 1){
                                     $(this).append($('<ul/>', {class: "dropdown-menu"}));
                                     $(this).attr("class", "dropdown-submenu");
-                                    // $(this).children().first().attr("tabindex", "-1");
                                 }
                                 $(this).children().last().append($('<li/>', {id: 'id'+`${result[i].id}`}));
                                 $(this).children().last().children().last().append($('<a/>', {
-                                    href: "/productsWithCategory-" + `${result[i].id}` + "-Page-0",
+                                    href: "/plumbs/category" + `${result[i].id}` + "/page0",
                                     text: `${result[i].name}`,
-                                    // click: linkProductCategory
                                 }));
                             }
                         }
@@ -130,6 +125,34 @@ $('#mainCategoryButton').click(function () {
     };
 });
 
+
+$(document).ready(function () {
+    $('#followDivTextArea').parent().css("padding-top", ($('#followDivTextArea').height() / 2.5));
+    $('#followDivTextArea').parent().css("padding-bottom", ($('#followDivTextArea').height() / 2.5));
+
+    var maxHeight = 0;
+    $('#allAuthors').children().each(function () {
+        if (maxHeight < $(this).height()){
+            maxHeight = $(this).height();
+        }
+    });
+    console.log(maxHeight);
+    $('#allAuthors').children().each(function () {
+        var difHeight = (maxHeight - $(this).height()) / 2;
+        $(this).children().children().last().css("padding-top", difHeight + "px");
+        $(this).children().children().last().css("padding-bottom", difHeight + "px");
+        $(this).height(maxHeight);
+    });
+
+    var allWidth = $('#navResize').width();
+    var currentWidth = $('#navResize').children().width();
+    $('#navResize').css("padding-left", (allWidth - currentWidth) /2);
+});
+window.onresize = function () {
+    var allWidth = $('#navResize').width();
+    var currentWidth = $('#navResize').children().width();
+    $('#navResize').css("padding-left", (allWidth - currentWidth) /2);
+};
 
 
 $(document).ready(function selectProduct() {

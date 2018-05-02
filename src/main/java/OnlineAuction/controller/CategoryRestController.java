@@ -1,6 +1,7 @@
 package OnlineAuction.controller;
 
 import OnlineAuction.entity.Category;
+import OnlineAuction.service.AuthorService;
 import OnlineAuction.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,13 @@ public class CategoryRestController {
 
     @PostMapping("/saveCategory")
     public void saveCategory(@RequestBody Category jsonCategorySave){
+        System.out.println("save category");
         categoryService.save(jsonCategorySave);
     }
 
     @DeleteMapping("/deleteCategory-{id}")
     public void deleteCategory(@PathVariable("id")int deleteId){
+        System.out.println(deleteId);
         categoryService.delete(deleteId);
     }
 
@@ -38,7 +41,6 @@ public class CategoryRestController {
     public void changeIdFatherCategory(@RequestBody Category jsonCategoryChangeIDFC){
         categoryService.changeIdFatherCategory(jsonCategoryChangeIDFC.getId(), jsonCategoryChangeIDFC.getIdFatherCategories());
     }
-
 
 
 }

@@ -8,7 +8,7 @@
                 <h4 class="modal-title">Вхід</h4>
             </div>
 
-            <div class="modal-body ">
+            <div class="modal-body">
                 <form id="loginform" action="/logMe" method="post" class="row">
                     <input type="text" name="username" class="col-md-10 col-md-offset-1 padding-left-20px border-red margin-top-10px color-white background-dark-grey border-radius-90px outline-none" placeholder="User Name">
                     <input type="password" name="password" class="col-md-10 col-md-offset-1 padding-left-20px  border-red margin-top-10px color-white background-dark-grey border-radius-90px outline-none" placeholder="Password">

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="col-md-12 background-dark-grey ">
+<div id="contacts" class="col-md-12 background-dark-grey ">
     <div class="col-md-10 col-md-offset-1">
         <div class="border-bottom-middle-grey padding-top-30px margin-bottom-50px">
             <div class="row padding-0-15px">
@@ -39,6 +39,7 @@
             <p class="text-align-center"> Online Auction © 2018. All Rights Reserved. </p>
         </div>
     </div>
+</div>
 
 <script src="/js/main.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

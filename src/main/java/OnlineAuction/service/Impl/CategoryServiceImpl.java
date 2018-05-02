@@ -37,6 +37,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public void delete(int id) {
-        categoryDAO.delete(id);
+        categoryDAO.removeCategory(id);
+    }
+
+    public Category findCategoryByName(String name) {
+        return categoryDAO.findCategoryByName(name);
     }
 }
