@@ -24,7 +24,7 @@
                 <h3 class="text-align-center">Лоти написані даним автором</h3>
                 <c:forEach items="${plumbs}" var="plumb">
                     <c:set var="picture" value="${plumb.picture}"/>
-                    <div class="col-xs-6 col-md-3 padding-0-15px ">
+                    <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
                         <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
                             <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
                                 <img src="${picturePhoto.photo}" class="img-responsive width-100prc">

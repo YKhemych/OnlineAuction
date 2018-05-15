@@ -27,8 +27,15 @@ public class DescribeOfUser {
     private String phone;
     private String country;
     private String city;
-    private String street;
     private int zipCode;
 
-
+    public DescribeOfUser(User user, String name, String surname, String phone, String country, String city, int zipCode) {
+        this.user = user;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.country = country;
+        this.city = city;
+        this.zipCode = zipCode;
+    }
 }

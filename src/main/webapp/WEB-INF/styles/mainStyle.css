@@ -190,6 +190,10 @@
     padding-bottom: 50px;
 }
 
+.padding-5-15-0-15px{
+    padding: 5px 15px 0 15px;
+}
+
 .padding-0-15px{
     padding: 5px 15px;
 }

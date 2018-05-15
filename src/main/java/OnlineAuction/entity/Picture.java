@@ -74,7 +74,7 @@ public class Picture {
                 ", material='" + material + '\'' +
                 ", conditions='" + conditions + '\'' +
                 ", descriptions='" + descriptions + '\'' +
-                ", picturePhotos='" + picturePhotos + '\'' +
+//                ", picturePhotos='" + picturePhotos + '\'' +
 //                ", plumb='" + plumb + '\'' +
                 '}';
     }

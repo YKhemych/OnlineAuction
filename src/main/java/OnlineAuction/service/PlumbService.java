@@ -4,6 +4,7 @@ package OnlineAuction.service;
 import OnlineAuction.entity.Author;
 import OnlineAuction.entity.Category;
 import OnlineAuction.entity.Plumb;
+import OnlineAuction.entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
@@ -20,6 +21,10 @@ public interface PlumbService {
     Plumb findOneByIdWithPicture(int id);
     void confirmPlumb(int id);
     List<Plumb> allActivePlumbs(Date currentDate, Pageable pageRequest);
-    List<Plumb> findActivePlumbByCategoryWithPictureAndPhoto(Category category, Date currentDate, Pageable pageRequest);
+    List<Plumb> findPlumbByCategoryWithPictureAndPhoto(Category category, Pageable pageRequest);
     List<Plumb> findAllPlumbByAuthorWithPictureAndPhoto(Author author, Pageable pageRequest);
+    int countPlumbByCategory(Category category);
+    int countActivePlumb(Date currentDate);
+    List<Plumb> findAllPlumbWithPicture();
+    List<Plumb> findPlumbByUser(User user, Pageable pageRequest);
 }

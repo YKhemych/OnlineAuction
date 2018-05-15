@@ -127,56 +127,42 @@ $('#mainCategoryButton').click(function () {
 
 
 $(document).ready(function () {
-    $('#followDivTextArea').parent().css("padding-top", ($('#followDivTextArea').height() / 2.5));
-    $('#followDivTextArea').parent().css("padding-bottom", ($('#followDivTextArea').height() / 2.5));
-
-    var maxHeight = 0;
-    $('#allAuthors').children().each(function () {
-        if (maxHeight < $(this).height()){
-            maxHeight = $(this).height();
-        }
-    });
-    console.log(maxHeight);
-    $('#allAuthors').children().each(function () {
-        var difHeight = (maxHeight - $(this).height()) / 2;
-        $(this).children().children().last().css("padding-top", difHeight + "px");
-        $(this).children().children().last().css("padding-bottom", difHeight + "px");
-        $(this).height(maxHeight);
-    });
+    $('#followDivTextArea').parent().css("padding-top", ($('#followDivTextArea').height() / 2.9));
+    $('#followDivTextArea').parent().css("padding-bottom", ($('#followDivTextArea').height() / 2.9));
 
     var allWidth = $('#navResize').width();
     var currentWidth = $('#navResize').children().width();
-    $('#navResize').css("padding-left", (allWidth - currentWidth) /2);
+    $('#navResize').children().css("padding-left", (allWidth - currentWidth) /2);
 });
 window.onresize = function () {
     var allWidth = $('#navResize').width();
     var currentWidth = $('#navResize').children().width();
-    $('#navResize').css("padding-left", (allWidth - currentWidth) /2);
+    $('#navResize').children().css("padding-left", (allWidth - currentWidth) /2 -1);
 };
 
 
 $(document).ready(function selectProduct() {
-    $('.js-example-basic-multiple').select2({
+    $('.js-search-multiple').select2({
         placeholder: "Пошук по аукціону...",
     });
 
-    // $.ajax({
-    //     url: '/allProduct',
-    //     type: 'get',
-    //     success : function(result){
-    //         var products = [];
-    //         var n =0;
-    //         $(result).each(function () {
-    //             products[n] ={id: "productWithId"+ this[0], text: this[1]};
-    //             n++;
-    //         });
-    //         $('.js-example-basic-multiple').select2({
-    //             placeholder: "Пошук по аукціону...",
-    //             data: products
-    //         });
-    //     },
-    //     error : function () {
-    //         alert("errror load Product to Select");
-    //     }
-    // });
+    $.ajax({
+        url: '/allPlumbs',
+        type: 'get',
+        success : function(result){
+            var products = [];
+            var n =0;
+            $(result).each(function () {
+                products[n] ={id: "plumb"+ this.id, text: this.picture.name};
+                n++;
+            });
+            $('.js-search-multiple').select2({
+                placeholder: "Пошук по аукціону...",
+                data: products
+            });
+        },
+        error : function () {
+            alert("errror load Product to Select");
+        }
+    });
 });

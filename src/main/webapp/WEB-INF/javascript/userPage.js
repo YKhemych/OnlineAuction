@@ -1,95 +1,27 @@
-
-var $confirmEditDeliveryAddress = $('<button/>', {id: "confirmEditDeliveryAddress", class: "btn btn-danger margin-0-10", text: "Підтвердити"});
-var $cancelEditDeliveryAddress = $('<a/>', { href: "/userPage"});
-$cancelEditDeliveryAddress.append($('<button/>',{id: "cancelEditDeliveryAddress", class: "btn btn-danger margin-0-10", text: "Відмінити"}));
-var oldName, oldSurname, oldCountryAndCity, oldStreetAndZipCode, oldPhoneOfUser, oldEmail;
-var randomCode;
-
-
-$('#editDeliveryAddress').click(function () {
-    $('#editDeliveryAddress').remove();
-    $('#divDeliveryAddress').append($confirmEditDeliveryAddress);
-    $('#divDeliveryAddress').append($cancelEditDeliveryAddress);
-    oldName = $('#nameOfUser').html();
-    oldSurname = $('#surnameOfUser').html();
-    oldCountryAndCity = $('#countryAndCity').html();
-    oldCountryAndCity = oldCountryAndCity.split(",");
-    oldStreetAndZipCode = $('#streetAndZipCode').html();
-    oldStreetAndZipCode = oldStreetAndZipCode.split(",");
-    oldPhoneOfUser = $('#phoneOfUser').html();
-    console.log(oldName,oldSurname,oldCountryAndCity[0],oldStreetAndZipCode[1], oldPhoneOfUser );
-    $('#nameOfUser').empty().append($('<input>', {type: "text", placeholder: oldName}));
-    $('#surnameOfUser').empty().append($('<input>', {type: "text", placeholder: oldSurname}));
-    $('#countryAndCity').empty().append($('<input>', {type: "text", placeholder: oldCountryAndCity[0]})).append($('<input>', {class: "margin-0-10", type: "text", placeholder: oldCountryAndCity[1]}));
-    $('#streetAndZipCode').empty().append($('<input>', {type: "text", placeholder: oldStreetAndZipCode[0]})).append($('<input>', {class: "margin-0-10", type: "text", placeholder: oldStreetAndZipCode[1]}));
-    $('#phoneOfUser').empty().append($('<input>', {type: "text", placeholder: oldPhoneOfUser}));
-})
-
-$confirmEditDeliveryAddress.click(function () {
-    console.log("confirm");
-    var username = $('#userLogin').html();
-    var name = $('#nameOfUser').children().val();
-    if (name == ""){
-        name = oldName;
-    }
-    var surname = $('#surnameOfUser').children().val();
-    if (surname == ""){
-        surname = oldSurname;
-    }
-    var country = $('#countryAndCity').children().first().val();
-    if (country == ""){
-        country = oldCountryAndCity[0];
-    }
-    var city = $('#countryAndCity').children().last().val();
-    if (city == ""){
-        city = oldCountryAndCity[1];
-    }
-    var street = $('#streetAndZipCode').children().first().val();
-    if (street == ""){
-        street = oldStreetAndZipCode[0];
-    }
-    var zipCode = $('#streetAndZipCode').children().last().val();
-    if (zipCode == ""){
-        zipCode = oldStreetAndZipCode[1];
-    }
-    var phone = $('#phoneOfUser').children().val();
-    if (phone == ""){
-        phone = oldPhoneOfUser;
-    }
-    var user = {username: username ,name: name, surname: surname, country: country, city: city, street: street, zipCode: zipCode, phone: phone};
-    var jsonUserEdit = JSON.stringify(user);
-    $.ajax({
-        url: '/editDeliveryAddress',
-        type: 'post',
-        contentType: 'application/json',
-        data : jsonUserEdit,
-        success : function () {
-            top.location = $('#exitUser').attr('href');
-        },
-        error : function () {
-            alert("!!!!");
-        }
+$(function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
     });
-
 });
 
-$('#substitutePassword').click(function () {
+function changePassword() {
     $('#substitutePassword').remove();
-    // console.log($('#mainCharacteristics').height() * 2);
-    $('#mainCharacteristics').css("height", $('#mainCharacteristics').height() * 3);
+    var userName = $('#userName').html();
     randomCode = Math.random().toString(36).slice(2, 8);
-    $('#mainCharacteristics').append($('<div/>', {id: "activeChangePassword"}));
+    $('#headline').after($('<div/>', {id: "activeChangePassword", class: "col-md-10 col-md-offset-1 padding-top-30px padding-left-30px padding-bottom-20px border-radius-45px background-white row"}));
     $('#activeChangePassword').append($('<p/>', {text: "На ваш e-mail адрес надіслано лист з кодом підтвердження!!!"}));
-    $('#activeChangePassword').append($('<input>', {id:"confirmationCode", type: "text", class: "col-md-2", placeholder: "Confirmation code"}));
+    $('#activeChangePassword').append($('<input>', {id:"confirmationCode", type: "text", class: "col-md-2 outline-none", placeholder: "Confirmation code"}));
     $('#activeChangePassword').append($('<p/>', {class: "col-md-12 padding-top-10px", text: "Новий пароль"}));
     $('#activeChangePassword').append($('<div/>', {class: "col-md-12 padding-0"}));
-    $('#activeChangePassword').children().last().append($('<input>', {id: "newPassword", type: "text", class: "col-md-2", placeholder: "New password"}));
-    $('#activeChangePassword').children().last().append($('<input>', {id: "confirmNewPassword", type: "text", class: "col-md-2 margin-left-20px", placeholder: "Confirm new password"}));
-    $('#activeChangePassword').append($('<button/>', {id: "confirmSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px", text: "Підтвердити", onclick: "confirmEditPasword()"}));
-    $('#activeChangePassword').append($('<a/>', {href: "/userPage"}));
-    $('#activeChangePassword').children().last().append($('<button/>',{id: "cancelSubstitutePassword", class: "btn btn-sm btn-danger margin-top-10px margin-left-20px", text: "Відмінити"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "newPassword", type: "text", class: "col-md-2 outline-none", placeholder: "New password"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "confirmNewPassword", type: "text", class: "col-md-2 outline-none margin-left-20px", placeholder: "Confirm new password"}));
+    $('#activeChangePassword').append($('<button/>', {id: "confirmSubstitutePassword", class: "btn border-radius-45px color-white background-red hover-back-gren margin-top-10px padding-0-40px", text: "Підтвердити", onclick: "confirmEditPasword()"}));
+    $('#activeChangePassword').append($('<a/>', {href: "/userPage"+ userName}));
+    $('#activeChangePassword').children().last().append($('<button/>',{id: "cancelSubstitutePassword", class: "btn border-radius-45px color-white background-red hover-back-gren margin-top-10px margin-left-20px padding-0-40px", text: "Відмінити"}));
     console.log(randomCode);
-    var userName = $('#userLogin').html();
+
     $.ajax({
         url: '/sendConfirmationCodeTo-' + userName,
         type: 'post',
@@ -104,42 +36,10 @@ $('#substitutePassword').click(function () {
     });
 
 
-});
-
-$('#editEmail').click(function () {
-   oldEmail = $('#userEmail').html();
-    $('#userEmail').remove();
-    $('#divForEmail').append($('<input>', {id: "inputForEditEmail",class: "float-left ",type: "email", placeholder: oldEmail}));
-
-    $('#divForEmail').append($('<button/>', {id: "confirmEditEmail", class: "btn btn-sm btn-danger margin-left-20px", text: "Підтвердити", onclick: "editEmailAddress()"}));
-    var buffA = $('<a/>', {href: "/userPage"});
-    buffA.append($('<button/>',{id: "cancelEditEmail", class: "btn btn-sm btn-danger margin-left-20px", text: "Відмінити"}));
-    $('#divForEmail').append(buffA);
-
-});
-
-function editEmailAddress() {
-    var userLogin = $('#userLogin').html();
-    var email = $('#inputForEditEmail').val();
-    if (email == ""){
-        email = oldEmail;
-    }
-    $.ajax({
-        url: '/editEmail-' + userLogin,
-        type: 'post',
-        contentType: 'text/plain',
-        data : email,
-        success : function () {
-            top.location = $('#exitUser').attr('href');
-        },
-        error : function () {
-            alert("!!!!");
-        }
-    });
-}
+};
 
 function confirmEditPasword() {
-    var userLogin = $('#userLogin').html();
+    var userLogin = $('#userName').html();
     var confirmationCode = $('#confirmationCode').val();
     var newPassword = $('#newPassword').val();
     var confirmNewPassword = $('#confirmNewPassword').val();
@@ -168,3 +68,203 @@ function confirmEditPasword() {
         $('#mainCharacteristics').append($('<p/>', {id: "messageArea", class: "color-red margin-top-5px", text: "Код підтвердження не коректний"}));
     }
 }
+
+var maxHeight = [0,0,0];
+var buff = 0;
+var buffNumberOfRows = 0;
+
+function addEditCharacteristic() {
+    var loginUser = $('#userName').text();
+    var userFromUserPage = $('#nameOfUser').text();
+    if (loginUser == userFromUserPage){
+        $('#editArea').append($('<a/>', {id:"editButton", class: "color-red margin-0-10", text: "Редагувати", onclick: "editCharacteristic()"}));
+        $('#editArea').append($('<a/>', {class: "color-red margin-0-10", text: "Змінити пароль", onclick: "changePassword()"}));
+        $('#addPlumbArea').removeClass("hide");
+    }
+}
+
+function editCharacteristic(){
+    $('#editButton').removeAttr("onclick");
+    var userName = $('#userName').html();
+    $('#headline').after($('<div/>', {id: "describeOfEdit", class: "col-md-6 col-md-offset-3 padding-left-30px border-radius-45px background-white row"}));
+    $('#describeOfEdit').append($('<p/>', {class: "display-i-b padding-top-10px",text: "Натисніть на поле яке ви хочете редагувати."}));
+    $('#describeOfEdit').append($('<a/>',{href: "/userPage"+ userName, class: "btn btn-sm border-radius-45px color-white background-red hover-back-gren margin-left-20px margin-top-5px padding-0-15px float-right", text: "Відмінити редагування"}));
+    $('#email').attr("onclick", "editEmail()");
+    $('.edit').attr("onclick", "createEditArea(this)");
+
+}
+
+function createEditArea(obj){
+    $('.edit').removeAttr("onclick");
+    var buffText = obj.innerHTML;
+    var buffId = obj.id;
+    switch (buffId){
+        case 'email':
+            $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit",class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "email", placeholder: buffText}));
+            break;
+        case 'phone':
+            $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit",class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "tel", placeholder: buffText}));
+            break;
+        case 'zipCode':
+            $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit", max: "99999", class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "number", placeholder: buffText}));
+            break;
+        default:
+            $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit",class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "text", placeholder: buffText}));
+            break
+    }
+    $('#inputForEdit').after($('<button/>',{id: "cancelForEdit", class: "btn border-radius-45px color-white background-red hover-back-gren margin-left-20px padding-0-15px outline-none", text: "Відмінити", onclick: "closeEdit('" + buffId + "')"}));
+    $('#inputForEdit').after($('<button/>', {id: "confirmForEdit", class: "btn border-radius-45px color-white background-red hover-back-gren padding-0-15px outline-none", text: "Підтвердити", onclick: "successEdit('" + buffId + "')"}));
+}
+
+function successEdit(idElement) {
+    var userLogin = $('#userName').html();
+    var buffText = $('#inputForEdit').val();
+    if (buffText == ""){
+        buffText = $('#inputForEdit').attr("placeholder");;
+    }
+    switch (idElement){
+        case "email":
+            $.ajax({
+                url: '/editEmail-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "name":
+            $.ajax({
+                url: '/editName-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "surname":
+            $.ajax({
+                url: '/editSurname-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "phone":
+            $.ajax({
+                url: '/editPhone-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "country":
+            $.ajax({
+                url: '/editCountry-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "city":
+            $.ajax({
+                url: '/editCity-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+        case "zipCode":
+            $.ajax({
+                url: '/editZipCode-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    changeInputToP(idElement, buffText);
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
+    }
+
+}
+
+function closeEdit(idElement){
+    var buffText = $('#inputForEdit').attr("placeholder");
+    changeInputToP(idElement, buffText);
+}
+
+function changeInputToP(idElement, buffText) {
+    $('#cancelForEdit').remove();
+    $('#confirmForEdit').remove();
+    $('#inputForEdit').replaceWith($('<p>', {id: idElement, class: "col-md-7 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato edit",text: buffText}));
+    $('.edit').attr("onclick", "createEditArea(this)");
+}
+
+
+$(document).ready(function () {
+    addEditCharacteristic();
+
+    $('#allPlumbs').children().each(function () {
+        if (buff == 4){
+            buffNumberOfRows ++;
+            buff = 0;
+        }
+        if (maxHeight[buffNumberOfRows] < $(this).height()){
+            maxHeight[buffNumberOfRows] = $(this).height();
+        }
+        buff ++;
+    });
+    buff = 0;
+    buffNumberOfRows = 0;
+
+    $('#allPlumbs').children().each(function () {
+        if (buff == 4){
+            buffNumberOfRows ++;
+            buff = 0;
+        }
+        var difHeight = (maxHeight[buffNumberOfRows] - $(this).height()) / 2;
+        $(this).children().children().last().css("padding-top", difHeight/ 2 + "px");
+        $(this).children().children().last().css("padding-bottom", difHeight/ 2 + "px");
+        $(this).children().css("margin-bottom", difHeight + "px");
+        $(this).height(maxHeight[buffNumberOfRows]);
+        buff ++;
+    });
+});
+

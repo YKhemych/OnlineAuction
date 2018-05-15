@@ -13,21 +13,30 @@
                     <%--</div>--%>
 
                     <div id="allPlumbs" class="padding-10px-0 col-md-12">
-
                         <c:forEach items="${plumbs}" var="plumb">
                             <c:set var="picture" value="${plumb.picture}"/>
-                            <div class="col-xs-6 col-md-3 padding-0-15px ">
-                                <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
+                            <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
+                                <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 margin-0 border-radius-10px overflow-hidden background-blond-grey">
                                     <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
                                         <img src="${picturePhoto.photo}" class="img-responsive width-100prc">
                                     </c:forEach>
                                     <div class="row caption margin-0 padding-0 display-block height-auto">
-                                        <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}"</h4>
+                                        <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}</h4>
                                         <c:if test="${plumb.dateOfEnd > currentDate}">
-                                            <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Початкова ціна</p>
+                                            <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Стартова ціна</p>
                                             <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
-                                            <p class="col-md-6 font-weight-bold font-size-14px-Lato"> ${plumb.minPrise} грн </p>
-                                            <p class="col-md-6 font-weight-bold font-size-14px-Lato"> 205 грн </p>
+                                            <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
+                                            <c:forEach items="${plumb.bets}" var="bet" end="0">
+                                                <c:if test="${bet.price > 0}">
+                                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato">${bet.price} грн</p>
+                                                </c:if>
+                                                <c:if test="${bet == null}">
+                                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${plumb.dateOfEnd < currentDate}">
+                                            <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Продано</p>
                                         </c:if>
                                     </div>
 
@@ -37,47 +46,44 @@
 
                     </div>
 
-                    <%--<div class="btn-toolbar col-md-12 row" role="toolbar">--%>
-                        <%--<ul id="pagination" class="pagination">--%>
-                            <%--<li>--%>
-                                <%--<a id="aPreviousPage" <c:if test="${authorsPage != 0}">--%>
-                                    <%--href ="allAuthorsPage-${authorsPage - 1}"--%>
-                                <%--</c:if> class="border-l-radius-45px" >&laquo;</a>--%>
-                            <%--</li>--%>
-                            <%--<c:if test="${authorsPage > 2}">--%>
-                                <%--<li><a href="allAuthorsPage-0" class="text-danger"> 1 </a></li>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${authorsPage > 1}">--%>
-                                <%--<li><a href="allAuthorsPage-${authorsPage - 2}" class="text-danger"> ${authorsPage - 1} </a></li>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${authorsPage > 0}">--%>
-                                <%--<li><a href="allAuthorsPage-${authorsPage - 1}" class="text-danger"> ${authorsPage} </a></li>--%>
-                            <%--</c:if>--%>
+                    <div class="btn-toolbar col-md-12 row" role="toolbar">
+                        <ul id="pagination" class="pagination">
+                            <li>
+                                <a id="aPreviousPage" <c:if test="${plumbsPage != 0}">
+                                    href ="allActivePlumb-Page${plumbsPage - 1}"
+                                </c:if> class="border-l-radius-45px" >&laquo;</a>
+                            </li>
+                            <c:if test="${plumbsPage > 2}">
+                                <li><a href="allActivePlumb-Page0" class="text-danger"> 1 </a></li>
+                            </c:if>
+                            <c:if test="${plumbsPage > 1}">
+                                <li><a href="allActivePlumb-Page${plumbsPage - 2}" class="text-danger"> ${plumbsPage - 1} </a></li>
+                            </c:if>
+                            <c:if test="${plumbsPage > 0}">
+                                <li><a href="allActivePlumb-Page${plumbsPage - 1}" class="text-danger"> ${plumbsPage} </a></li>
+                            </c:if>
 
-                            <%--<li class="active"><a id="activePage" href="" >${authorsPage + 1}</a></li>--%>
+                            <li class="active"><a id="activePage" href="" >${plumbsPage + 1}</a></li>
 
-                            <%--<c:if test="${(maxPage - authorsPage) > 2}">--%>
-                                <%--<li><a href="allAuthorsPage-${authorsPage + 1}" class="text-danger"> ${authorsPage + 2} </a></li>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${(maxPage - authorsPage) > 3}">--%>
-                                <%--<li><a href="allAuthorsPage-${authorsPage + 2}" class="text-danger"> ${authorsPage + 3} </a></li>--%>
-                            <%--</c:if>--%>
-                            <%--<c:if test="${authorsPage + 1 != maxPage}">--%>
-                                <%--<li><a id="maxPage" href="allAuthorsPage-${maxPage - 1}" class="text-danger"> ${maxPage} </a></li>--%>
-                            <%--</c:if>--%>
-                            <%--<li>--%>
-                                <%--<a id="aNextPage" <c:if test="${authorsPage + 1 != maxPage}">--%>
-                                    <%--href="allAuthorsPage-${authorsPage + 1}"--%>
-                                <%--</c:if> class="border-r-radius-45px">&raquo;</a>--%>
-                            <%--</li>--%>
-                        <%--</ul>--%>
-                    <%--</div>--%>
+                            <c:if test="${(maxPage - plumbsPage) > 2}">
+                                <li><a href="allActivePlumb-Page${plumbsPage + 1}" class="text-danger"> ${plumbsPage + 2} </a></li>
+                            </c:if>
+                            <c:if test="${(maxPage - plumbsPage) > 3}">
+                                <li><a href="allActivePlumb-Page${plumbsPage + 2}" class="text-danger"> ${plumbsPage + 3} </a></li>
+                            </c:if>
+                            <c:if test="${plumbsPage + 1 != maxPage}">
+                                <li><a id="maxPage" href="allActivePlumb-Page${maxPage - 1}" class="text-danger"> ${maxPage} </a></li>
+                            </c:if>
+                            <li>
+                                <a id="aNextPage" <c:if test="${plumbsPage + 1 != maxPage}">
+                                    href="allActivePlumb-Page${plumbsPage + 1}"
+                                </c:if> class="border-r-radius-45px">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
 
 
                 </div>
-
-
-
             </div>
 
         </div>

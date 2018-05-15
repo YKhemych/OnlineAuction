@@ -2,6 +2,7 @@ package OnlineAuction.service.Impl;
 
 import OnlineAuction.dao.DescribeOfUserDAO;
 import OnlineAuction.entity.DescribeOfUser;
+import OnlineAuction.entity.User;
 import OnlineAuction.service.DescribeOfUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,31 @@ public class DescribeOfUserServiceImpl implements DescribeOfUserService {
         describeOfUserDAO.save(describeOfUser);
     }
 
-    public void delete(int id) {
-        describeOfUserDAO.delete(id);
+    public DescribeOfUser findByUser(User user) {
+        return describeOfUserDAO.findByUser(user);
     }
 
-    public DescribeOfUser findOne(int id) {
-        return describeOfUserDAO.findOne(id);
+    public void editNameOfUser(User user, String name) {
+        describeOfUserDAO.editNameOfUser(user, name);
     }
 
-    public List<DescribeOfUser> findAll() {
-        return describeOfUserDAO.findAll();
+    public void editSurnameOfUser(User user, String surname) {
+        describeOfUserDAO.editSurnameOfUser(user, surname);
+    }
+
+    public void editPhoneOfUser(User user, String phone) {
+        describeOfUserDAO.editPhoneOfUser(user, phone);
+    }
+
+    public void editCountryOfUser(User user, String country) {
+        describeOfUserDAO.editCountryOfUser(user, country);
+    }
+
+    public void editCityOfUser(User user, String city) {
+        describeOfUserDAO.editCityOfUser(user, city);
+    }
+
+    public void editZipCodeOfUser(User user, int zipCode) {
+        describeOfUserDAO.editZipCodeOfUser(user, zipCode);
     }
 }

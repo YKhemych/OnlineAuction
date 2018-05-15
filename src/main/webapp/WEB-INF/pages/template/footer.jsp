@@ -36,7 +36,7 @@
 
         </div>
         <div class="color-middel-grey">
-            <p class="text-align-center"> Online Auction © 2018. All Rights Reserved. </p>
+            <p class="text-align-center"> Online Auction © 2018. Design by Yosyp Khemych </p>
         </div>
     </div>
 </div>

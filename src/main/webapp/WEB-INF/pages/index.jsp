@@ -8,7 +8,7 @@
     </center>
     <center>
         <b>
-            <p class="font-size-50px padding-top-15px">ONLINE AUCTION</p>
+            <p class="font-size-50px padding-top-15px">PAINTING AUCTION</p>
         </b>
     </center>
 </div>
@@ -84,7 +84,7 @@
     <div class="col-md-10 col-md-offset-1 margin-bottom-50px">
         <center>
             <b>
-                <p class="font-size-30px margin-top-80px">АКТИВНІ ЛОТИ</p>
+                <p class="font-size-30px margin-top-80px">ПОПУЛЯРНІ ЛОТИ</p>
             </b>
             <div class="width-100px border-bottom-red-3px"></div>
         </center>
@@ -173,8 +173,8 @@
 
     <div id="allAuthors" class="col-md-10 col-md-offset-1">
         <c:forEach items="${authors}" var="author">
-            <div class="col-xs-6 col-md-3 padding-0-15px">
-                <a href="/authorWithId${author.id}/Page0" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
+            <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
+                <a href="/authorWithId${author.id}/Page0" class="thumbnail btn padding-0 margin-0 border-radius-10px overflow-hidden background-blond-grey">
 
                     <img src="${author.photo}" class="img-responsive width-100prc">
 
@@ -197,13 +197,12 @@
 </div>
 
 
-<div id="followDiv" class="col-md-12 img-responsive">
+<div id="followDiv" class="col-md-12 img-responsive width-100prc">
     <div class="col-md-10 col-md-offset-1 padding-right-100px">
         <div id="followDivTextArea" class="background-dark-grey color-blond-grey col-md-5 padding-0-40px float-right margin-right-30px border-radius-10px">
             <center>
                 <h2 class="padding-top-15px padding-bottom-10px">Оновлення</h2>
             </center>
-
             <p class="font-size-14px-Lato padding-bottom-10px">Слідкуйте за нашими оновленнями. Введіть електронну пошту і підпишіться на нашу розсилку. </p>
 
             <div class="row margin-5-5-30-5 background-blond-grey border-blond-grey border-radius-45px  overflow-hidden">
@@ -223,5 +222,5 @@
 
 
 
-
+<script src="/js/listEdit.js"></script>
 <%@include file="template/footer.jsp"%>

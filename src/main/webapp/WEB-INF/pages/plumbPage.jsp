@@ -33,11 +33,10 @@
                     <p id="activeMark" class="hide"><c:if test="${plumb.dateOfEnd > currentDate}">true</c:if></p>
                     <h2 id="pictureName" class="padding-left-20px text-align-center">${picture.name}</h2>
                     <c:if test="${plumb.dateOfEnd > currentDate}">
-                        <%--<sec:authorize access="hasRole('ROLE_USER')">--%>
                             <div class="col-md-12 background-blond-grey border-radius-10px padding-top-10px padding-bottom-10px">
                                 <div class="row padding-top-5px">
                                     <p class="col-md-6">Стартова ціна: ${plumb.minPrise} грн</p>
-                                    <p class="col-md-6">Поточна ціна(  ставок ): </p>
+                                    <p id="currentBet" class="col-md-6">Поточна ціна(0 ст.): ${plumb.minPrise} грн</p>
                                 </div>
                                 <div class="row padding-top-10px border-top-white">
                                     <p class="col-md-6">Закінчення:</p>
@@ -45,18 +44,23 @@
                                     <p id="dateOfEnd" class="col-md-6">${plumb.dateOfEnd}</p>
                                     <p id="timeToEnd" class="col-md-6"></p>
                                 </div>
+                                <sec:authorize access="isAuthenticated()">
                                 <div class="row padding-top-10px border-top-white padding-left-20px">
-                                    <input type="number" class="col-md-6 pad font-size-14px-Lato outline-none border-radius-10px">
-                                    <a class="btn col-md-4 col-md-offset-1 padding-0 text-align-center border-radius-10px border-white color-dark-grey hover-cl-gren hover-border-green" onclick="">Зробити ставку</a>
+                                    <input id="betSize" type="number" class="col-md-6 pad font-size-14px-Lato outline-none border-radius-10px" placeholder="${plumb.minPrise}" min="${plumb.minPrise}" >
+                                    <a class="btn col-md-4 col-md-offset-1 padding-0 text-align-center border-radius-10px border-white color-dark-grey hover-cl-gren hover-border-green" onclick="makeABet()">Зробити ставку</a>
                                 </div>
+                                </sec:authorize>
                             </div>
-                        <%--</sec:authorize>--%>
                     </c:if>
 
 
                     <div class="col-md-12">
                         <h3 class="padding-bottom-10px padding-left-20px"> Опис </h3>
-                        <p> Автор: </p>
+                        <p class="display-i-b white-space-pre-wrap">Власник: </p><a href="/userPage${plumb.user.username}" class="color-dark-grey">${plumb.user.username}</a>
+                        <br>
+                        <p class="display-i-b white-space-pre-wrap">Розділ: ${picture.category.name}</p>
+                        <br>
+                        <p class="display-i-b white-space-pre-wrap">Автор: </p><a href="/authorWithId${picture.author.id}/Page0" class="color-dark-grey">${picture.author.name}</a>
                         <p> Рік: ${picture.year}</p>
                         <p> Розмір: ${picture.size}</p>
                         <p> Матеріал: ${picture.material}</p>

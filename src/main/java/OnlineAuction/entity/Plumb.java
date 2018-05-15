@@ -55,10 +55,18 @@ public class Plumb {
                 ", dateOfEnd=" + dateOfEnd +
                 ", confirmed=" + confirmed +
 //                ", picture=" + picture +
+                ", bets=" + bets +
                 '}';
     }
 
     public Picture getPicture() {
         return picture;
+    }
+
+    public void addBet(Bet bet) {
+        this.bets.add(bet);
+    }
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 }

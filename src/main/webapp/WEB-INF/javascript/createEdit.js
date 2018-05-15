@@ -36,52 +36,13 @@ function time(obj) {
     obj.value = datetime[0] + " " + datetime[1];
     console.log(obj.value);
 
-
-
 }
-
-
-
-
-// $('#saveProduct').click(function () {
-//     console.log("function Save Product");
-//     var categoryId = $('#categoryIdToAddProduct').text();
-//
-//     $('#formForSaveProductPhoto').attr('action', "/saveProduct" + $activeProduct.text() + "ToCategory" + categoryId);
-//
-//     $('#formForSaveProductPhoto').submit();
-//
-// });
-
-
-// function sendToMainProductImage(obj) {
-//     $('#mainProductImage').attr("src", obj.src);
-//     $('#mainProductImage').width($('#mainProductImage').parent().width());
-// }
-
-
 
 //resize Image
 // $(document).ready(function () {
 //     $('#mainProductImage').attr("src", $('#allProductPhoto').children().first().children().children().attr("src"));
 //     $('#mainProductImage').width($('#mainProductImage').parent().width());
 // });
-
-
-
-// function deleteProduct(id) {
-//     $.ajax({
-//         url: '/deleteProduct' + id,
-//         type: 'delete',
-//         success : function () {
-//             alert("deleting was success");
-//             history.back();
-//         },
-//         error : function () {
-//             console.log("error deleting");
-//         }
-//     });
-// }
 
 
 

@@ -2,6 +2,7 @@ package OnlineAuction.service.Impl;
 
 import OnlineAuction.dao.BetDAO;
 import OnlineAuction.entity.Bet;
+import OnlineAuction.entity.Plumb;
 import OnlineAuction.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,13 @@ public class BetServiceImpl implements BetService {
 
     public List<Bet> findAll() {
         return betDAO.findAll();
+    }
+
+    public Bet findMaxBet(Plumb plumb) {
+        return betDAO.findMaxBet(plumb);
+    }
+
+    public int numberOfBets(Plumb plumb) {
+        return betDAO.numberOfBets(plumb);
     }
 }

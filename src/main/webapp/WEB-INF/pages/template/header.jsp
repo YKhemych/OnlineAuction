@@ -8,7 +8,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-    <title>Title</title>
+    <title>Painting Auction</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <%--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>--%>
@@ -40,7 +40,7 @@
                     </button> -->
                 </div>
 
-                <div id="navResize" class="collapse navbar-collapse">
+                <div id="navResize" class="collapse navbar-collapse padding-0">
                     <ul class="nav navbar-nav">
                         <li class="nav-menu-li margin-5-5-0-5">
                             <a id="mainCategoryButton" role="button" data-toggle="dropdown" class="hover-border-b-red float-left"> Розділи </a>
@@ -49,7 +49,7 @@
                             <a id="authors" href="/allAuthorsPage-0" class="hover-border-b-red"> АВТОРИ </a>
                         </li>
                         <li class="nav-menu-li margin-5-5-0-5">
-                            <a id="rules" href=""class="hover-border-b-red"> ПРАВИЛА </a>
+                            <a id="rules" href="/rules"class="hover-border-b-red"> ПРАВИЛА </a>
                         </li>
                         <li class="nav-menu-li margin-5-5-0-5">
                             <a href="#contacts" class="hover-border-b-red"> КОНТАКТИ </a>
@@ -63,12 +63,14 @@
         <div class="col-md-3 padding-left-30px padding-top-15px">
             <a href="/" class="color-dark-grey">
                 <img src="/photo/auction.png" class="height-60px float-left">
-                <h2 class="padding-left-10px margin-0 display-i-b">ONLINE</h2><br>
+                <h2 class="padding-left-10px margin-0 display-i-b">PAINTING</h2><br>
                 <h3 class="padding-left-10px margin-0 display-i-b">AUCTION</h3>
             </a>
         </div>
-        <div class="col-md-6 padding-top-30px">
-            <input type="text" name="search" class="col-md-12 border-dark-grey font-size-20px padding-5px border-radius-45px padding-left-20px outline-none" autocomplete="off" style="">
+        <div class="col-md-6 margin-top-30px">
+            <select class="js-search-multiple col-md-12"
+                    multiple="multiple" onchange="window.location.href = this.options[this.selectedIndex].value">
+            </select>
         </div>
         <div class="col-md-3 padding-top-30px float-right">
             <sec:authorize access="!isAuthenticated()">
@@ -88,12 +90,13 @@
 
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
+                <p id="userName" class="hide"><sec:authentication property="principal.username"/></p>
                 <a id="exitUser" href="/logout" class="padding-0 float-right margin-right-30px color-dark-grey outline-none">
                     <span class="glyphicon glyphicon-log-out padding-0 font-size-30px margin-5-5-0-5"></span>
                 </a>
 
                 <a id="user" class="padding-0 float-right margin-right-30px color-dark-grey outline-none"
-                    href= <sec:authorize access="hasRole('ROLE_USER')"> "/userPage" </sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')" var="roleAdmin">"/admin/adminPage"</sec:authorize> >
+                    href= <sec:authorize access="hasRole('ROLE_USER')"> "/userPage<sec:authentication property="principal.username"/>" </sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')" var="roleAdmin">"/admin/adminPage"</sec:authorize> >
                     <span class="glyphicon glyphicon-user padding-0 font-size-30px margin-5-5-0-5"></span>
                 </a>
             </sec:authorize>

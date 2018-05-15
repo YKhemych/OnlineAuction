@@ -1,6 +1,8 @@
 package OnlineAuction.controller;
 
+import OnlineAuction.entity.DescribeOfUser;
 import OnlineAuction.entity.User;
+import OnlineAuction.service.DescribeOfUserService;
 import OnlineAuction.service.MailService;
 import OnlineAuction.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class UserRestController {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private DescribeOfUserService describeOfUserService;
 
 
     @PostMapping("/saveUser")
@@ -34,8 +38,8 @@ public class UserRestController {
 
     @PostMapping("/editEmail-{userLogin}")
     public void editEmailAddress(@PathVariable("userLogin")String userLogin, @RequestBody String email){
-//        System.out.println(userLogin);
-//        System.out.println(email);
+        System.out.println(userLogin);
+        System.out.println(email);
         userService.editEmailAddress(userLogin, email);
     }
 
@@ -45,7 +49,7 @@ public class UserRestController {
         System.out.println(userLogin);
         User user = userService.findByName(userLogin);
         String message = "Hello " + user.getUsername() + " you want to change your password. It is your confirmation code :"  + code;
-        mailService.sendByUser(user, message);
+//        mailService.sendByUser(user, message);
     }
 
     @PostMapping("/editPassword-{userLogin}")
@@ -53,6 +57,41 @@ public class UserRestController {
         userService.changePassword(userLogin, newPassword);
     }
 
+    @PostMapping("/editName-{userLogin}")
+    public void editNameOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String name){
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editNameOfUser(user, name);
+    }
 
+    @PostMapping("/editSurname-{userLogin}")
+    public void editSurnameOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String surname){
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editSurnameOfUser(user, surname);
+    }
+
+    @PostMapping("/editPhone-{userLogin}")
+    public void editPhoneOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String phone){
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editPhoneOfUser(user, phone);
+    }
+
+    @PostMapping("/editCountry-{userLogin}")
+    public void editCountryOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String country){
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editCountryOfUser(user, country);
+    }
+
+    @PostMapping("/editCity-{userLogin}")
+    public void editCityOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String city){
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editCityOfUser(user, city);
+    }
+
+    @PostMapping("/editZipCode-{userLogin}")
+    public void editZipCodeOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String zipCode){
+        int buffZipCode = Integer.parseInt(zipCode);
+        User user = userService.findByName(userLogin);
+        describeOfUserService.editZipCodeOfUser(user, buffZipCode);
+    }
 
 }

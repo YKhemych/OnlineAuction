@@ -35,6 +35,8 @@ public class PlumbController {
     UserService userService;
     @Autowired
     PlumbService plumbService;
+    @Autowired
+    BetService betService;
 
 
     @GetMapping("/createPlumb")
@@ -66,7 +68,7 @@ public class PlumbController {
 //        System.out.println(currentDate);
         Plumb plumb = new Plumb(picture, user, price,currentDate,dateOfEnd,false);
         plumbService.save(plumb);
-        return "redirect:/userPage";
+        return "redirect:/userPage" + userName;
     }
 
     public void savePhoto(@RequestParam List<MultipartFile> picturePhotoList, Picture picture) throws IOException {
@@ -84,7 +86,7 @@ public class PlumbController {
 
 
     @GetMapping("/plumb{id}")
-    public String createPlumb(@PathVariable("id")int id, Model model){
+    public String plumbWithId(@PathVariable("id")int id, Model model){
         Plumb plumb = plumbService.findOneByIdWithPicture(id);
 //        System.out.println(plumb);
         Picture picture = plumb.getPicture();
@@ -107,9 +109,18 @@ public class PlumbController {
     @GetMapping("/plumbs/category{id}/page{page}")
     public String plumbsWithCategory(@PathVariable("id")int categoryId, @PathVariable("page")int page, Model model){
         Category category = categoryService.findOne(categoryId);
-        System.out.println(category);
         Date currentDate = new Date();
-        List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.findActivePlumbByCategoryWithPictureAndPhoto(category, currentDate, new PageRequest(page, 20)));
+        List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.findPlumbByCategoryWithPictureAndPhoto(category, new PageRequest(page, 20)));
+        for (Plumb plumb: plumbs) {
+            Bet bet = betService.findMaxBet(plumb);
+            plumb.setBets(new ArrayList<Bet>());
+            plumb.addBet(bet);
+        }
+        int maxPage = (int) Math.ceil((plumbService.countPlumbByCategory(category) - 1) / 20 + 1);
+        System.out.println(maxPage);
+        model.addAttribute("maxPage", maxPage);
+        model.addAttribute("plumbsPage", page);
+        model.addAttribute("categoryId", categoryId);
         model.addAttribute("plumbs", plumbs);
         model.addAttribute("currentDate", currentDate);
         return "listPlumbs";
@@ -119,6 +130,14 @@ public class PlumbController {
     public String allActivePlumbs(@PathVariable("page")int page, Model model){
         Date currentDate = new Date();
         List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.allActivePlumbs(currentDate, new PageRequest(page, 20)));
+        for (Plumb plumb: plumbs) {
+            Bet bet = betService.findMaxBet(plumb);
+            plumb.setBets(new ArrayList<Bet>());
+            plumb.addBet(bet);
+        }
+        int maxPage = (int) Math.ceil((plumbService.countActivePlumb(currentDate) - 1) / 20 + 1);
+        model.addAttribute("maxPage", maxPage);
+        model.addAttribute("plumbsPage", page);
         model.addAttribute("plumbs", plumbs);
         model.addAttribute("currentDate", currentDate);
         return "listPlumbs";

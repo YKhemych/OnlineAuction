@@ -195,3 +195,21 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover{
     border-top-left-radius: 45px;
     border-bottom-left-radius: 45px;
 }
+
+.select2-container .select2-selection--multiple{
+    border-radius: 45px;
+    border-color: #3b3940;
+    padding: 5px 0 10px 20px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #3b3940;
+}
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.thumbnail{
+    border-color: #f3f6fd;
+}

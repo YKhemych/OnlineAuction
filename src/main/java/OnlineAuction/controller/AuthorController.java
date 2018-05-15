@@ -49,7 +49,6 @@ public class AuthorController {
     @GetMapping("/allAuthorsPage-{page}")
     public String allAuthors(@PathVariable("page")int page, Model model){
         List<Author> authors = new ArrayList<Author>(authorService.findAllPageable(new PageRequest(page, 20)));
-
         int maxPage = (int) Math.ceil((authorService.countAuthors() - 1) / 20 + 1);
         model.addAttribute("maxPage", maxPage);
         model.addAttribute("authors", authors);

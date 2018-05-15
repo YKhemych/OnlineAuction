@@ -9,6 +9,7 @@ $(document).ready(function () {
     if ($('#activeMark').text() == 'true'){
         setTime();
     }
+    currentBet();
 });
 
 function setTime() {
@@ -43,9 +44,60 @@ function setTime() {
         if (seconds > 0){
             lastTime = lastTime - seconds * 1000;
         }
-        $('#timeToEnd').text(days + " день "+ hours + ":" + minutes + ":" + seconds);
+        $('#timeToEnd').text(days + " д. "+ hours + ":" + minutes + ":" + seconds);
     }, 1000);
 }
+
+function currentBet() {
+    var plumbId = $('#plumbId').text();
+    $.ajax({
+        url: '/numberOfBetIn'+ plumbId,
+        type: 'get',
+        success : function (result) {
+            if (result != 0){
+                $('#currentBet').text("Поточна ціна (" + result);
+                $.ajax({
+                    url: '/maxBetIn'+ plumbId,
+                    type: 'get',
+                    success : function (result) {
+                        $('#currentBet').text($('#currentBet').text() + " ст.): " + result.price + "грн");
+                        $('#betSize').attr("placeholder", result.price);
+                        $('#betSize').attr("min", result.price);
+                    },
+                    error : function () {
+                        alert("!!!!");
+                    }
+                });
+            }
+        },
+        error : function () {
+            alert("!!!!");
+        }
+    });
+
+}
+
+
+function makeABet() {
+    var betSize = $('#betSize').val();
+    var plumbId = $('#plumbId').text();
+    var userName = $('#userName').text();
+    console.log(userName);
+    $.ajax({
+        url: '/makeBetTo' + plumbId + "By" + userName,
+        type: 'post',
+        contentType: 'text/plain',
+        data : betSize,
+        success : function () {
+            console.log('yes');
+        },
+        error : function () {
+            alert("!!!!");
+        }
+    });
+    console.log(plumbId);
+}
+
 function deletePlumb(id) {
     $.ajax({
         url: '/deletePlumb' + id,

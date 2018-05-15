@@ -11,19 +11,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
 
-//    @Modifying
-//    @Query("update User u set u.name = :newName, u.surname= :newSurname, u.country= :newCountry, u.city= :newCity," +
-//            " u.street= :newStreet, u.zipCode= :newZipCode, u.phone= :newPhone where u.username = :oldUserName")
-//    void editDeliveryAddress(@Param("oldUserName")String username, @Param("newName")String name, @Param("newSurname")String surname,
-//                             @Param("newCountry")String country, @Param("newCity")String city, @Param("newStreet")String street,
-//                             @Param("newZipCode")int zipCode, @Param("newPhone")String phone);
-
-
     @Query("from User u where u.username = :name")
     User findByName(@Param("name") String name);
-
-//    @Query("from User u left join fetch u.orderProducts where u.username = :name")
-//    User findByNameWithOrder(@Param("name") String name);
 
     @Modifying
     @Query("update User u set u.email = :email where u.username = :userName")

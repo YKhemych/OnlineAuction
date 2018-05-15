@@ -4,6 +4,7 @@ import OnlineAuction.dao.PlumbDAO;
 import OnlineAuction.entity.Author;
 import OnlineAuction.entity.Category;
 import OnlineAuction.entity.Plumb;
+import OnlineAuction.entity.User;
 import OnlineAuction.service.PlumbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -52,11 +53,27 @@ public class PlumbServiceImpl implements PlumbService{
         return plumbDAO.allActivePlumbs(currentDate, pageRequest);
     }
 
-    public List<Plumb> findActivePlumbByCategoryWithPictureAndPhoto(Category category, Date currentDate, Pageable pageRequest) {
-        return plumbDAO.findActivePlumbByCategoryWithPictureAndPhoto(category, currentDate, pageRequest);
+    public List<Plumb> findPlumbByCategoryWithPictureAndPhoto(Category category, Pageable pageRequest) {
+        return plumbDAO.findPlumbByCategoryWithPictureAndPhoto(category, pageRequest);
     }
 
     public List<Plumb> findAllPlumbByAuthorWithPictureAndPhoto(Author author, Pageable pageRequest) {
         return plumbDAO.findAllPlumbByAuthorWithPictureAndPhoto(author, pageRequest);
+    }
+
+    public int countPlumbByCategory(Category category) {
+        return plumbDAO.countPlumbByCategory(category);
+    }
+
+    public int countActivePlumb(Date currentDate) {
+        return plumbDAO.countActivePlumb(currentDate);
+    }
+
+    public List<Plumb> findAllPlumbWithPicture() {
+        return plumbDAO.findAllPlumbWithPicture();
+    }
+
+    public List<Plumb> findPlumbByUser(User user, Pageable pageRequest) {
+        return plumbDAO.findPlumbByUser(user, pageRequest);
     }
 }

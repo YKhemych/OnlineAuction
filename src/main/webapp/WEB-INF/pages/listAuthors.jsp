@@ -15,8 +15,8 @@
                     <div id="allAuthors" class="padding-10px-0 col-md-12">
 
                         <c:forEach items="${authors}" var="author">
-                            <div class="col-xs-6 col-md-3 padding-0-15px">
-                                <a href="/authorWithId${author.id}/Page0" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
+                            <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
+                                <a href="/authorWithId${author.id}/Page0" class="thumbnail btn padding-0 margin-0 border-radius-10px overflow-hidden background-blond-grey">
 
                                     <img src="${author.photo}" class="img-responsive width-100prc">
 
