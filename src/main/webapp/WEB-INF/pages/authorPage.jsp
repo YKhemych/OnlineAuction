@@ -6,8 +6,9 @@
         <div class="row padding-top-30px padding-bottom-20px" >
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <div class="display-block padding-bottom-10px col-md-10 col-md-offset-1">
-                    <%--<h3 class="padding-0 float-left margin-0">Id: ${author.id}</h3>--%>
-                    <a onclick="deleteAuthor(${author.id})" class="hover-back-gren btn background-red color-white border-radius-90px padding-0-40px outline-none float-right">Видалити</a>
+                    <a onclick="deleteAuthor(${author.id})" class="btn color-red padding-left-30px outline-none float-right">Видалити</a>
+                    <a id="createEditArea" onclick="createAreaToEditAuthor()" class="btn color-red padding-left-30px outline-none float-right">Редагувати</a>
+                    <a id="cancelEdit" href="/authorWithId${author.id}/Page${authorsPage}" class="hide btn text-danger float-right">Відмінити редагування</a>
                 </div>
             </sec:authorize>
             <div id="authorDiv" class="col-md-10 col-md-offset-1 padding-top-30px padding-bottom-20px background-white overflow-hidden border-radius-45px">
@@ -15,40 +16,82 @@
                     <img src="${author.photo}" class="img-responsive width-100prc border-radius-45px max-height-600px">
                 </div>
                 <div class="col-md-7 padding-left-20px">
+                    <p id="authorId" class="hide">${author.id}</p>
                     <h3 class="text-align-center padding-top-5px padding-bottom-10px margin-0">${author.name}</h3>
-                    <p>${author.biography}</p>
+                    <p id="biography">${author.biography}</p>
                 </div>
             </div>
 
-            <div id="plumbDiv" class="col-md-10 col-md-offset-1 margin-top-30px padding-top-5px padding-bottom-20px background-white overflow-hidden border-radius-45px">
-                <h3 class="text-align-center">Лоти написані даним автором</h3>
-                <c:forEach items="${plumbs}" var="plumb">
-                    <c:set var="picture" value="${plumb.picture}"/>
-                    <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
-                        <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
-                            <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
-                                <img src="${picturePhoto.photo}" class="img-responsive width-100prc">
-                            </c:forEach>
-                            <div class="row caption margin-0 padding-0 display-block height-auto">
-                                <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}"</h4>
-                                <c:if test="${plumb.dateOfEnd > currentDate}">
-                                    <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Початкова ціна</p>
-                                    <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
-                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato"> ${plumb.minPrise} грн </p>
-                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato"> 205 грн </p>
-                                </c:if>
-                                <c:if test="${plumb.dateOfEnd < currentDate}">
-                                    <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Продано</p>
-                                </c:if>
-                            </div>
+            <div id="plumbDiv" class="col-md-10 col-md-offset-1 margin-top-30px padding-top-5px padding-bottom-10px background-white overflow-hidden border-radius-45px">
+                <h3 class="text-align-center padding-bottom-10px">Лоти написані даним автором</h3>
+                <div id="allPlumbs">
+                    <c:forEach items="${plumbs}" var="plumb">
+                        <c:set var="picture" value="${plumb.picture}"/>
+                        <div id="" class="col-xs-6 col-md-3 padding-5-15-0-15px">
+                            <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
+                                <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
+                                    <img src="${picturePhoto.photo}" class="img-responsive width-100prc">
+                                </c:forEach>
+                                <div class="row caption margin-0 padding-0 display-block height-auto">
+                                    <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}</h4>
+                                    <c:if test="${plumb.dateOfEnd > currentDate}">
+                                        <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Початкова ціна</p>
+                                        <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
+                                        <p class="col-md-6 font-weight-bold font-size-14px-Lato"> ${plumb.minPrise} грн </p>
+                                        <p class="col-md-6 font-weight-bold font-size-14px-Lato"> 205 грн </p>
+                                    </c:if>
+                                    <c:if test="${plumb.dateOfEnd < currentDate}">
+                                        <p class="col-md-12 margin-0 padding-bottom-5px font-size-14px-Lato white-space-pre-wrap">Продано</p>
+                                    </c:if>
+                                </div>
 
-                        </a>
-                    </div>
-                </c:forEach>
+                            </a>
+                        </div>
+                    </c:forEach>
+                </div>
+
+                <div class="btn-toolbar col-md-12 row" role="toolbar">
+                    <ul id="pagination" class="pagination">
+                        <li>
+                            <a id="aPreviousPage" <c:if test="${authorsPage != 0}">
+                                href ="allAuthorsPage-${authorsPage - 1}"
+                            </c:if> class="btn border-l-radius-45px" >&laquo;</a>
+                        </li>
+                        <c:if test="${authorsPage > 2}">
+                            <li><a href="allAuthorsPage-0" class="btn text-danger"> 1 </a></li>
+                        </c:if>
+                        <c:if test="${authorsPage > 1}">
+                            <li><a href="allAuthorsPage-${authorsPage - 2}" class="btn text-danger"> ${authorsPage - 1} </a></li>
+                        </c:if>
+                        <c:if test="${authorsPage > 0}">
+                            <li><a href="allAuthorsPage-${authorsPage - 1}" class="btn text-danger"> ${authorsPage} </a></li>
+                        </c:if>
+
+                        <li class="active"><a id="activePage" class="btn" >${authorsPage + 1}</a></li>
+
+                        <c:if test="${(maxPage - authorsPage) > 2}">
+                            <li><a href="allAuthorsPage-${authorsPage + 1}" class="btn text-danger"> ${authorsPage + 2} </a></li>
+                        </c:if>
+                        <c:if test="${(maxPage - authorsPage) > 3}">
+                            <li><a href="allAuthorsPage-${authorsPage + 2}" class="btn text-danger"> ${authorsPage + 3} </a></li>
+                        </c:if>
+                        <c:if test="${authorsPage + 1 != maxPage}">
+                            <li><a id="maxPage" href="allAuthorsPage-${maxPage - 1}" class="btn text-danger"> ${maxPage} </a></li>
+                        </c:if>
+                        <li>
+                            <a id="aNextPage" <c:if test="${authorsPage + 1 != maxPage}">
+                                href="allAuthorsPage-${authorsPage + 1}"
+                            </c:if> class="btn border-r-radius-45px">&raquo;</a>
+                        </li>
+
+                    </ul>
+
+                </div>
             </div>
 
         </div>
     </div>
 
 <script src="/js/authorPage.js"></script>
+<script src="/js/listEdit.js"></script>
 <%@include file="template/footer.jsp"%>

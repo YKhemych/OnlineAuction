@@ -33,33 +33,33 @@
                             <ul id="pagination" class="pagination">
                                 <li>
                                     <a id="aPreviousPage" <c:if test="${authorsPage != 0}">
-                                                            href ="allAuthorsPage-${authorsPage - 1}"
+                                                            href ="/authorWithId${author.id}/Page${authorsPage - 1}"
                                                         </c:if> class="border-l-radius-45px" >&laquo;</a>
                                 </li>
                                 <c:if test="${authorsPage > 2}">
-                                    <li><a href="allAuthorsPage-0" class="text-danger"> 1 </a></li>
+                                    <li><a href="/authorWithId${author.id}/Page0" class="text-danger"> 1 </a></li>
                                 </c:if>
                                 <c:if test="${authorsPage > 1}">
-                                    <li><a href="allAuthorsPage-${authorsPage - 2}" class="text-danger"> ${authorsPage - 1} </a></li>
+                                    <li><a href="/authorWithId${author.id}/Page${authorsPage - 2}" class="text-danger"> ${authorsPage - 1} </a></li>
                                 </c:if>
                                 <c:if test="${authorsPage > 0}">
-                                    <li><a href="allAuthorsPage-${authorsPage - 1}" class="text-danger"> ${authorsPage} </a></li>
+                                    <li><a href="/authorWithId${author.id}/Page${authorsPage - 1}" class="text-danger"> ${authorsPage} </a></li>
                                 </c:if>
 
                                 <li class="active"><a id="activePage" href="" >${authorsPage + 1}</a></li>
 
                                 <c:if test="${(maxPage - authorsPage) > 2}">
-                                    <li><a href="allAuthorsPage-${authorsPage + 1}" class="text-danger"> ${authorsPage + 2} </a></li>
+                                    <li><a href="/authorWithId${author.id}/Page${authorsPage + 1}" class="text-danger"> ${authorsPage + 2} </a></li>
                                 </c:if>
                                 <c:if test="${(maxPage - authorsPage) > 3}">
-                                    <li><a href="allAuthorsPage-${authorsPage + 2}" class="text-danger"> ${authorsPage + 3} </a></li>
+                                    <li><a href="/authorWithId${author.id}/Page${authorsPage + 2}" class="text-danger"> ${authorsPage + 3} </a></li>
                                 </c:if>
                                 <c:if test="${authorsPage + 1 != maxPage}">
-                                    <li><a id="maxPage" href="allAuthorsPage-${maxPage - 1}" class="text-danger"> ${maxPage} </a></li>
+                                    <li><a id="maxPage" href="/authorWithId${author.id}/Page${maxPage - 1}" class="text-danger"> ${maxPage} </a></li>
                                 </c:if>
                                 <li>
                                     <a id="aNextPage" <c:if test="${authorsPage + 1 != maxPage}">
-                                                        href="allAuthorsPage-${authorsPage + 1}"
+                                                        href="/authorWithId${author.id}/Page${authorsPage + 1}"
                                                     </c:if> class="border-r-radius-45px">&raquo;</a>
                                 </li>
 

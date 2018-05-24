@@ -22,4 +22,20 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     @Query("update User u set u.password = :password where u.username = :userName")
     void changePassword(@Param("userName")String userName, @Param("password")String password);
 
+    @Modifying
+    @Query("update User u set u.accountNonLocked = false where u.username = :userName")
+    void blockUser(@Param("userName")String userName);
+
+    @Modifying
+    @Query("update User u set u.accountNonLocked = true where u.username = :userName")
+    void unblockUser(@Param("userName")String userName);
+
+    @Modifying
+    @Query("update User u set u.enabled = true where u.username = :userName")
+    void setEnabledTrue(@Param("userName")String userName);
+
+    @Modifying
+    @Query("update User u set u.allowSendEmail = true where u.username = :userName")
+    void allowSendEmailTrue(@Param("userName")String userName);
+
 }

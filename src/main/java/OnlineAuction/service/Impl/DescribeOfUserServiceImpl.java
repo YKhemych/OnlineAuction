@@ -48,4 +48,9 @@ public class DescribeOfUserServiceImpl implements DescribeOfUserService {
     public void editZipCodeOfUser(User user, int zipCode) {
         describeOfUserDAO.editZipCodeOfUser(user, zipCode);
     }
+
+    @Override
+    public void editFacebookURLofUser(User user, String facebookURL) {
+        describeOfUserDAO.editFacebookURLofUser(user, facebookURL);
+    }
 }

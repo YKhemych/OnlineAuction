@@ -4,17 +4,19 @@ package OnlineAuction.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Plumb {
 
     @Id
@@ -36,6 +38,7 @@ public class Plumb {
     private List<Bet> bets;
 
     private boolean confirmed = false;
+    private boolean delivered = false;
 
     public Plumb(Picture picture, User user, int minPrise, Date currentDate, Date dateOfEnd, boolean confirmed) {
         this.picture = picture;
@@ -44,19 +47,6 @@ public class Plumb {
         this.currentDate = currentDate;
         this.dateOfEnd = dateOfEnd;
         this.confirmed = confirmed;
-    }
-
-    @Override
-    public String toString() {
-        return "Plumb{" +
-                "id=" + id +
-                ", minPrise=" + minPrise +
-                ", currentDate=" + currentDate +
-                ", dateOfEnd=" + dateOfEnd +
-                ", confirmed=" + confirmed +
-//                ", picture=" + picture +
-                ", bets=" + bets +
-                '}';
     }
 
     public Picture getPicture() {

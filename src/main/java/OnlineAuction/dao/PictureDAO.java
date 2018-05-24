@@ -22,5 +22,11 @@ public interface PictureDAO extends JpaRepository<Picture, Integer> {
     @Query("from Picture p left join fetch p.plumb where p.category =:category group by p.id")
     List<Picture> findActivePictureByCategoryWithPlumbAndPhoto(@Param("category")Category category, Pageable pageRequest);
 
+    @Modifying
+    @Query("update Picture p set p.name = :newName where p.id = :pictureId")
+    void editPlumbName(@Param("newName")String name, @Param("pictureId")int pictureId);
 
+    @Modifying
+    @Query("update Picture p set p.category = :category where p.id = :pictureId")
+    void editPlumbCategory(@Param("category")Category category, @Param("pictureId")int pictureId);
 }

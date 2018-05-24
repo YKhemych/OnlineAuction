@@ -16,13 +16,11 @@ public class CategoryRestController {
 
     @PostMapping("/saveCategory")
     public void saveCategory(@RequestBody Category jsonCategorySave){
-        System.out.println("save category");
         categoryService.save(jsonCategorySave);
     }
 
     @DeleteMapping("/deleteCategory-{id}")
     public void deleteCategory(@PathVariable("id")int deleteId){
-        System.out.println(deleteId);
         categoryService.delete(deleteId);
     }
 

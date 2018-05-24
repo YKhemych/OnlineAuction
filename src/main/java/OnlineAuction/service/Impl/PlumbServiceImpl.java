@@ -49,6 +49,11 @@ public class PlumbServiceImpl implements PlumbService{
         plumbDAO.confirmPlumb(id);
     }
 
+    @Override
+    public void confirmDeliverPlumb(int id) {
+        plumbDAO.confirmDeliverPlumb(id);
+    }
+
     public List<Plumb> allActivePlumbs(Date currentDate, Pageable pageRequest) {
         return plumbDAO.allActivePlumbs(currentDate, pageRequest);
     }
@@ -65,6 +70,11 @@ public class PlumbServiceImpl implements PlumbService{
         return plumbDAO.countPlumbByCategory(category);
     }
 
+    @Override
+    public int countPlumbsByAuthor(Author author) {
+        return plumbDAO.countPlumbsByAuthor(author);
+    }
+
     public int countActivePlumb(Date currentDate) {
         return plumbDAO.countActivePlumb(currentDate);
     }
@@ -76,4 +86,9 @@ public class PlumbServiceImpl implements PlumbService{
     public List<Plumb> findPlumbByUser(User user, Pageable pageRequest) {
         return plumbDAO.findPlumbByUser(user, pageRequest);
     }
+
+    public void resetPlumb(int id, Date dateOfEnd, Date currentDate) {
+        plumbDAO.resetPlumb(id, dateOfEnd, currentDate);
+    }
+
 }

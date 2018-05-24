@@ -15,4 +15,5 @@ public interface AuthorService{
     int countAuthors();
     void removeAuthor(int id);
     Author findAuthorByName(String name);
+    void editBiography(String biography, int id);
 }

@@ -21,11 +21,18 @@ public interface AuthorDAO extends JpaRepository<Author, Integer> {
     @Query("select count(a.id) from Author a")
     int countAuthors();
 
+    @Query("select count(a.id) from Author a")
+    int countPlumbsByAuthor();
+
     @Modifying
     @Query("delete from Author a where a.id = :removeId")
     void removeAuthor(@Param("removeId") int id);
 
     @Query("from Author a where a.name =:name")
     Author findAuthorByName(@Param("name")String name);
+
+    @Modifying
+    @Query("update Author a set a.biography = :biography where a.id = :id")
+    void editBiography(@Param("biography")String biography, @Param("id")int id);
 
 }

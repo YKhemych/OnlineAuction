@@ -17,4 +17,5 @@ public interface DescribeOfUserService {
     void editCountryOfUser(User user, String country);
     void editCityOfUser(User user, String city);
     void editZipCodeOfUser(User user, int zipCode);
+    void editFacebookURLofUser(User user, String facebookURL);
 }

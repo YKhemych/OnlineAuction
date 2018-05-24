@@ -23,13 +23,4 @@ public class Author {
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "author")
     private List<Picture> pictures;
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", biography='" + biography + '\'' +
-                ", photo='" + photo + '\'' +
-                '}';
-    }
 }

@@ -39,4 +39,8 @@ public interface DescribeOfUserDAO extends JpaRepository<DescribeOfUser,Integer>
     @Modifying
     @Query("update DescribeOfUser d set d.zipCode = :zipCode where d.user = :user")
     void editZipCodeOfUser(@Param("user")User user, @Param("zipCode")int zipCode);
+
+    @Modifying
+    @Query("update DescribeOfUser d set d.facebookURL = :facebookURL where d.user = :user")
+    void editFacebookURLofUser(@Param("user")User user, @Param("facebookURL")String facebookURL);
 }

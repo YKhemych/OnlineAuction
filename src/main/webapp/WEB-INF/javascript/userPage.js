@@ -10,18 +10,17 @@ function changePassword() {
     $('#substitutePassword').remove();
     var userName = $('#userName').html();
     randomCode = Math.random().toString(36).slice(2, 8);
-    $('#headline').after($('<div/>', {id: "activeChangePassword", class: "col-md-10 col-md-offset-1 padding-top-30px padding-left-30px padding-bottom-20px border-radius-45px background-white row"}));
+    $('#headline').after($('<div/>',{id:"divForChangePassword", class: "col-md-10 col-md-offset-1 padding-top-30px padding-left-30px padding-bottom-20px border-radius-45px background-white row"}));
+    $('#divForChangePassword').append($('<div/>', {id: "activeChangePassword", class: "col-md-10 col-md-offset-1 padding-top-30px padding-left-30px padding-bottom-20px"}));
     $('#activeChangePassword').append($('<p/>', {text: "На ваш e-mail адрес надіслано лист з кодом підтвердження!!!"}));
-    $('#activeChangePassword').append($('<input>', {id:"confirmationCode", type: "text", class: "col-md-2 outline-none", placeholder: "Confirmation code"}));
+    $('#activeChangePassword').append($('<input>', {id:"confirmationCode", type: "text", class: "col-md-3 outline-none", placeholder: "Confirmation code"}));
     $('#activeChangePassword').append($('<p/>', {class: "col-md-12 padding-top-10px", text: "Новий пароль"}));
     $('#activeChangePassword').append($('<div/>', {class: "col-md-12 padding-0"}));
-    $('#activeChangePassword').children().last().append($('<input>', {id: "newPassword", type: "text", class: "col-md-2 outline-none", placeholder: "New password"}));
-    $('#activeChangePassword').children().last().append($('<input>', {id: "confirmNewPassword", type: "text", class: "col-md-2 outline-none margin-left-20px", placeholder: "Confirm new password"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "newPassword", type: "password", class: "col-md-2 outline-none", placeholder: "New password"}));
+    $('#activeChangePassword').children().last().append($('<input>', {id: "confirmNewPassword", type: "password", class: "col-md-2 outline-none margin-left-20px", placeholder: "Confirm new password"}));
     $('#activeChangePassword').append($('<button/>', {id: "confirmSubstitutePassword", class: "btn border-radius-45px color-white background-red hover-back-gren margin-top-10px padding-0-40px", text: "Підтвердити", onclick: "confirmEditPasword()"}));
     $('#activeChangePassword').append($('<a/>', {href: "/userPage"+ userName}));
     $('#activeChangePassword').children().last().append($('<button/>',{id: "cancelSubstitutePassword", class: "btn border-radius-45px color-white background-red hover-back-gren margin-top-10px margin-left-20px padding-0-40px", text: "Відмінити"}));
-    console.log(randomCode);
-
     $.ajax({
         url: '/sendConfirmationCodeTo-' + userName,
         type: 'post',
@@ -69,10 +68,6 @@ function confirmEditPasword() {
     }
 }
 
-var maxHeight = [0,0,0];
-var buff = 0;
-var buffNumberOfRows = 0;
-
 function addEditCharacteristic() {
     var loginUser = $('#userName').text();
     var userFromUserPage = $('#nameOfUser').text();
@@ -80,6 +75,8 @@ function addEditCharacteristic() {
         $('#editArea').append($('<a/>', {id:"editButton", class: "color-red margin-0-10", text: "Редагувати", onclick: "editCharacteristic()"}));
         $('#editArea').append($('<a/>', {class: "color-red margin-0-10", text: "Змінити пароль", onclick: "changePassword()"}));
         $('#addPlumbArea').removeClass("hide");
+        $('#plumbWhichBoughtByUser').removeClass("hide");
+
     }
 }
 
@@ -90,7 +87,8 @@ function editCharacteristic(){
     $('#describeOfEdit').append($('<p/>', {class: "display-i-b padding-top-10px",text: "Натисніть на поле яке ви хочете редагувати."}));
     $('#describeOfEdit').append($('<a/>',{href: "/userPage"+ userName, class: "btn btn-sm border-radius-45px color-white background-red hover-back-gren margin-left-20px margin-top-5px padding-0-15px float-right", text: "Відмінити редагування"}));
     $('#email').attr("onclick", "editEmail()");
-    $('.edit').attr("onclick", "createEditArea(this)");
+    $('.edit').attr("onclick", "createEditArea(this)").removeAttr("href");
+
 
 }
 
@@ -107,6 +105,9 @@ function createEditArea(obj){
             break;
         case 'zipCode':
             $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit", max: "99999", class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "number", placeholder: buffText}));
+            break;
+        case 'facebookURL':
+            $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit", class: "col-md-4 col-md-offset-4 padding-left-20px padding-top-5px outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "text", placeholder: buffText}));
             break;
         default:
             $('#'+ buffId).replaceWith($('<input>', {id: "inputForEdit",class: "col-md-4 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",type: "text", placeholder: buffText}));
@@ -130,7 +131,10 @@ function successEdit(idElement) {
                 contentType: 'text/plain',
                 data : buffText,
                 success : function () {
-                    changeInputToP(idElement, buffText);
+                    $('#cancelForEdit').remove();
+                    $('#confirmForEdit').remove();
+                    $('#inputForEdit').replaceWith($('<p>', {id: idElement, class: "col-md-7 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey color-dark-grey font-size-14px-Lato",text: "На вашу нову ел. пошту був надісланий лист з підтвердженням"}));
+                    $('.edit').attr("onclick", "createEditArea(this)");
                 },
                 error : function () {
                     alert("!!!!");
@@ -221,13 +225,38 @@ function successEdit(idElement) {
                 }
             });
             break;
+        case "facebookURL":
+            $.ajax({
+                url: '/editFacebookURL-' + userLogin,
+                type: 'post',
+                contentType: 'text/plain',
+                data : buffText,
+                success : function () {
+                    $('#cancelForEdit').remove();
+                    $('#confirmForEdit').remove();
+                    $('#inputForEdit').replaceWith($('<a>', {id: idElement, class: "col-md-4 col-md-offset-4 btn border-radius-90px background-red color-white hover-back-gren outline-none edit",text: "Сторінка в facebook"}));
+                    $('.edit').attr("onclick", "createEditArea(this)");
+                },
+                error : function () {
+                    alert("!!!!");
+                }
+            });
+            break;
     }
 
 }
 
 function closeEdit(idElement){
     var buffText = $('#inputForEdit').attr("placeholder");
-    changeInputToP(idElement, buffText);
+    if (idElement != 'facebookURL'){
+        changeInputToP(idElement, buffText);
+    } else {
+        $('#cancelForEdit').remove();
+        $('#confirmForEdit').remove();
+        $('#inputForEdit').replaceWith($('<a>', {id: idElement, class: "col-md-4 col-md-offset-4 btn border-radius-90px background-red color-white hover-back-gren outline-none edit",text: "Сторінка в facebook"}));
+        $('.edit').attr("onclick", "createEditArea(this)");
+    }
+
 }
 
 function changeInputToP(idElement, buffText) {
@@ -237,11 +266,44 @@ function changeInputToP(idElement, buffText) {
     $('.edit').attr("onclick", "createEditArea(this)");
 }
 
+function blockUser(){
+    var userLogin = $('#nameOfUser').text();
+    $('#blockUser').attr("onclick", "unblockUser()").text("Розблокувати користувача").attr("id", "unblockUser");
+    $.ajax({
+        url: '/admin/blockUser-' + userLogin,
+        type: 'post',
+        success : function () {
+            alert("user was blocked");
+        },
+        error : function () {
+            alert("!!!!");
+        }
+    });
+}
+
+function unblockUser(){
+    var userLogin = $('#nameOfUser').text();
+    $('#unblockUser').attr("onclick", "blockUser()").text("Блокувати користувача").attr("id", "blockUser");
+    $.ajax({
+        url: '/admin/unblockUser-' + userLogin,
+        type: 'post',
+        success : function () {
+            alert("user was unblocked");
+        },
+        error : function () {
+            alert("!!!!");
+        }
+    });
+}
 
 $(document).ready(function () {
     addEditCharacteristic();
 
-    $('#allPlumbs').children().each(function () {
+    var maxHeight = [0,0,0];
+    var buff = 0;
+    var buffNumberOfRows = 0;
+
+    $('#boughtPlumbs').children().each(function () {
         if (buff == 4){
             buffNumberOfRows ++;
             buff = 0;
@@ -254,7 +316,37 @@ $(document).ready(function () {
     buff = 0;
     buffNumberOfRows = 0;
 
-    $('#allPlumbs').children().each(function () {
+    $('#boughtPlumbs').children().each(function () {
+        if (buff == 4){
+            buffNumberOfRows ++;
+            buff = 0;
+        }
+        var difHeight = (maxHeight[buffNumberOfRows] - $(this).height()) / 2;
+        $(this).children().children().last().css("padding-top", difHeight/ 2 + "px");
+        $(this).children().children().last().css("padding-bottom", difHeight/ 2 + "px");
+        $(this).children().css("margin-bottom", difHeight + "px");
+        $(this).height(maxHeight[buffNumberOfRows]);
+        buff ++;
+    });
+
+    maxHeight = [0,0];
+    buff = 0;
+    buffNumberOfRows = 0;
+
+    $('#addedPlumbs').children().each(function () {
+        if (buff == 4){
+            buffNumberOfRows ++;
+            buff = 0;
+        }
+        if (maxHeight[buffNumberOfRows] < $(this).height()){
+            maxHeight[buffNumberOfRows] = $(this).height();
+        }
+        buff ++;
+    });
+    buff = 0;
+    buffNumberOfRows = 0;
+
+    $('#addedPlumbs').children().each(function () {
         if (buff == 4){
             buffNumberOfRows ++;
             buff = 0;

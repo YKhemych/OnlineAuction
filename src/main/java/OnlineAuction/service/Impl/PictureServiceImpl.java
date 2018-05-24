@@ -40,4 +40,12 @@ public class PictureServiceImpl implements PictureService{
         return pictureDAO.findActivePictureByCategoryWithPlumbAndPhoto(category, pageRequest);
     }
 
+    public void editPlumbName(String name, int pictureId) {
+        pictureDAO.editPlumbName(name, pictureId);
+    }
+
+    public void editPlumbCategory(Category category, int pictureId) {
+        pictureDAO.editPlumbCategory(category, pictureId);
+    }
+
 }

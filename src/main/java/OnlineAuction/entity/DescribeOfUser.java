@@ -22,6 +22,7 @@ public class DescribeOfUser {
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private User user;
+    private String facebookURL;
     private String name;
     private String surname;
     private String phone;
@@ -29,8 +30,9 @@ public class DescribeOfUser {
     private String city;
     private int zipCode;
 
-    public DescribeOfUser(User user, String name, String surname, String phone, String country, String city, int zipCode) {
+    public DescribeOfUser(User user, String facebookURL, String name, String surname, String phone, String country, String city, int zipCode) {
         this.user = user;
+        this.facebookURL = facebookURL;
         this.name = name;
         this.surname = surname;
         this.phone = phone;

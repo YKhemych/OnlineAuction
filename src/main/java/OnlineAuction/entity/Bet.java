@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Bet {
 
     @Id
@@ -33,11 +34,11 @@ public class Bet {
         this.plumb = plumb;
     }
 
-    @Override
-    public String toString() {
-        return "Bet{" +
-                "id=" + id +
-                ", price=" + price +
-                '}';
+    public User getUser() {
+        return user;
+    }
+
+    public Plumb getPlumb() {
+        return plumb;
     }
 }

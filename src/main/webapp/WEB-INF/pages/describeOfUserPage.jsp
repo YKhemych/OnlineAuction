@@ -16,6 +16,10 @@
                         <input id="surname" name="surname" type="text" class="col-md-7 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey font-size-14px-Lato">
                         <p class="col-md-5 margin-0 background-red color-white border-radius-90px padding-5px text-align-center white-space-nowrap font-size-14px-Lato">Прізвище</p>
                     </div>
+                    <div id="divFacebookURL" class="col-md-10 col-md-offset-1 margin-top-10px padding-5px background-blond-grey border-white border-radius-45px overflow-hidden">
+                        <input id="facebookURL" name="facebookURL" type="text" class="col-md-7 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey font-size-14px-Lato">
+                        <p class="col-md-5 margin-0 background-red color-white border-radius-90px padding-5px text-align-center white-space-nowrap font-size-14px-Lato">Сторінка в facebook</p>
+                    </div>
                     <div id="divPhone" class="col-md-10 col-md-offset-1 margin-top-10px padding-5px background-blond-grey border-white border-radius-45px overflow-hidden">
                         <input id="phone" name="phone" type="tel" class="col-md-7 padding-left-20px padding-top-5px margin-0 outline-none background-blond-grey font-size-14px-Lato">
                         <p class="col-md-5 margin-0 background-red color-white border-radius-90px padding-5px text-align-center white-space-nowrap font-size-14px-Lato">Номер телефону</p>

@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class User implements UserDetails {
@@ -38,7 +39,8 @@ public class User implements UserDetails {
     private boolean accountNonExpired = true;           //не закінчився срок використання
     private boolean accountNonLocked= true;             //не заблоковано
     private boolean credentialsNonExpired = true;       //повноваження не закінчилися
-    private boolean enabled = true;                     //включений
+    private boolean enabled = false;                    //включений
+    private boolean allowSendEmail = false;             //дозвіл відправки email повідомлень
 
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -120,6 +122,10 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
+    public void setAllowSendEmail(boolean allowSendEmail) {
+        this.allowSendEmail = allowSendEmail;
+    }
+
     public int getId() {
 
         return id;
@@ -141,6 +147,10 @@ public class User implements UserDetails {
         return describeOfUser;
     }
 
+    public boolean isAllowSendEmail() {
+        return allowSendEmail;
+    }
+
     public List<Plumb> getPlumbs() {
         return plumbs;
     }
@@ -149,16 +159,4 @@ public class User implements UserDetails {
         return bets;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

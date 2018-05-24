@@ -21,7 +21,6 @@ $('#registerButton').click(function () {
             contentType: 'application/json',
             data : jsonUser,
             success : function (result) {
-                console.log(result);
                 if (result == ""){
                     $('#regUsername').val('');
                     $('#regEmail').val('');
@@ -30,7 +29,8 @@ $('#registerButton').click(function () {
                     document.getElementById("closeRegistration").click();
                 }else{
                     if (result == "username"){
-                        $('#divForErrorUserName').append($('<p/>', {class: "margin-0", text: "This userName is present"}));
+                        $('#divForError').children().remove();
+                        $('#divForError').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Користувач з таким іменем вже існує"}));
                     }
                 }
 
@@ -41,14 +41,37 @@ $('#registerButton').click(function () {
         });
 
     }else {
-        $('#divForErrorPassword').append($('<p/>', {id: "errorInPassword",class: "margin-0", text: "Password don`t match"}));
+        $('#divForError').children().remove();
+        $('#divForError').append($('<p/>', {id: "errorInPassword",class: "margin-0 padding-top-10px", text: "Паролі не збігаються"}));
     }
 
 });
 
 $('#loginButton').click(function () {
-    var $form = $('#loginform');
-    $form.submit();
+    var userName = $('#loginUserName').val();
+    if (userName == 'admin'){
+        $('#loginform').submit();
+    } else {
+        $.ajax({
+            url: '/user' + userName,
+            type: 'get',
+            success: function (user) {
+                if (user.accountNonLocked == false){
+                    $('#divForError').children().remove();
+                    $('#divForError').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Користувач заблокований, зверніться до адміністрації"}));
+                } else if (user.enabled == false){
+                    $('#divForError').children().remove();
+                    $('#divForError').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Користувач не активований"}));
+                } else {
+                    $('#loginform').submit();
+                }
+            },
+            error: function () {
+                $('#divForError').children().remove();
+                $('#divForError').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Невірний логін або пароль"}));
+            }
+        });
+    }
 });
 
 var numbOfClicksToTheMainCategory = 0;
@@ -126,9 +149,25 @@ $('#mainCategoryButton').click(function () {
 });
 
 
+function addUserToMailing(){
+    var userName = $('#userNameToMailing').val();
+    $.ajax({
+        url: '/allowSendEmailTo' + userName,
+        type: 'post',
+        success : function () {
+            $('#divForInfoAboutAllow').children().remove();
+            $('#divForInfoAboutAllow').append($('<p/>', {class: "font-size-14px-Lato text-align-center", text: "Вас успішно додано"}))
+        },
+        error : function () {
+            alert("!!!!");
+        }
+    });
+}
+
+
 $(document).ready(function () {
-    $('#followDivTextArea').parent().css("padding-top", ($('#followDivTextArea').height() / 2.9));
-    $('#followDivTextArea').parent().css("padding-bottom", ($('#followDivTextArea').height() / 2.9));
+    $('#followDivTextArea').parent().css("padding-top", ($('#followDivTextArea').height() / 2.3));
+    $('#followDivTextArea').parent().css("padding-bottom", ($('#followDivTextArea').height() / 2.3));
 
     var allWidth = $('#navResize').width();
     var currentWidth = $('#navResize').children().width();

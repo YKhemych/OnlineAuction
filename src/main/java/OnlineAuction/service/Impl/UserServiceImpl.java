@@ -31,10 +31,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         userDAO.delete(id);
     }
 
-    public User findOne(int id) {
-        return userDAO.findOne(id);
-    }
-
     public User findByName(String name) {
         return userDAO.findByName(name);
     }
@@ -55,4 +51,25 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         String password = passwordEncoder.encode(newPassword);
         userDAO.changePassword(userName, password);
     }
+
+    @Override
+    public void blockUser(String userName) {
+        userDAO.blockUser(userName);
+    }
+
+    @Override
+    public void unblockUser(String userName) {
+        userDAO.unblockUser(userName);
+    }
+
+    @Override
+    public void setEnabledTrue(String userName) {
+        userDAO.setEnabledTrue(userName);
+    }
+
+    @Override
+    public void allowSendEmailTrue(String userName) {
+        userDAO.allowSendEmailTrue(userName);
+    }
+
 }

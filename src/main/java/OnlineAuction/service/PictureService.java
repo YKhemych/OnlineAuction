@@ -17,4 +17,6 @@ public interface PictureService {
     Picture findOne(int id);
     List<Picture> findAll();
     List<Picture> findActivePictureByCategoryWithPlumbAndPhoto(Category category, Date currentDate, Pageable pageRequest);
+    void editPlumbName(String name, int pictureId);
+    void editPlumbCategory(Category category, int pictureId);
 }

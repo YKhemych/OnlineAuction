@@ -100,7 +100,8 @@ function createConfirmedPlumbTable() {
                 $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{class: "confirmedPlumbId", text: `${this.id}`}));
                 $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{id:"tdForPictureName"+ this.id}));
                 $("#tdForPictureName" + this.id).append($('<a/>',{href:"/plumb" + this.id, class:"color-red", text: `${picture.name}`}));
-                $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{id: "tdForOwnerName" + this.id, text:`${user.username}`}));
+                $("#"+ "confirmedPlumbId" + this.id).append($('<td/>',{id: "tdForOwnerName" + this.id}));
+                $("#tdForOwnerName" + this.id).append($('<a/>',{href:"/userPage" + `${user.username}`, class:"color-red", text:`${user.username}`}));
             });
         },
         error : function () {

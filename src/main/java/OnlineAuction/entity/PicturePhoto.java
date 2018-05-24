@@ -28,14 +28,4 @@ public class PicturePhoto{
         this.picture = picture;
     };
 
-    @Override
-    public String toString() {
-        return "PicturePhotoDAO{" +
-                "id=" + id +
-                ", photo='" + photo + '\'' +
-                '}';
-    }
-
-
-
 }

@@ -5,12 +5,12 @@ import OnlineAuction.entity.User;
 import OnlineAuction.service.DescribeOfUserService;
 import OnlineAuction.service.MailService;
 import OnlineAuction.service.UserService;
+import OnlineAuction.service.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,14 +22,25 @@ public class UserRestController {
     @Autowired
     private MailService mailService;
     @Autowired
-    private DescribeOfUserService describeOfUserService;
+    private UserValidator userValidator;
 
+    @InitBinder("user")
+    public void bind(WebDataBinder binder){
+        binder.addValidators(userValidator);
+    }
+
+    @GetMapping("/user{userName}")
+    public User findUserByUserName(@PathVariable("userName")String userName){
+        return userService.findByName(userName);
+    }
 
     @PostMapping("/saveUser")
     public String saveUser(@RequestBody @Valid User user, BindingResult result) {
         if (result.hasErrors()){
             return result.getFieldError().getField();
         } else {
+            String message = "Activate your account click <a href='http://localhost:8080/user" + user.getUsername() + "EnabledTrue'>here</a>";
+            mailService.sendByUser(user, message);
             userService.save(user);
             return null;
         }
@@ -38,18 +49,20 @@ public class UserRestController {
 
     @PostMapping("/editEmail-{userLogin}")
     public void editEmailAddress(@PathVariable("userLogin")String userLogin, @RequestBody String email){
-        System.out.println(userLogin);
-        System.out.println(email);
-        userService.editEmailAddress(userLogin, email);
+        String message = "Hello " + userLogin + ". You want to change your email. Please click <a href='http://localhost:8080/email" + email + "/user" + userLogin +"'>here</a>";
+        mailService.sendByEmail(email, message);
     }
 
     @PostMapping("/sendConfirmationCodeTo-{userLogin}")
     public void sendConfirmationCode(@PathVariable("userLogin")String userLogin, @RequestBody String code){
-        System.out.println(code);
-        System.out.println(userLogin);
         User user = userService.findByName(userLogin);
-        String message = "Hello " + user.getUsername() + " you want to change your password. It is your confirmation code :"  + code;
-//        mailService.sendByUser(user, message);
+        String message = "Hello " + user.getUsername() + ". You want to change your password. It`s your confirmation code:"  + code;
+        mailService.sendByUser(user, message);
+    }
+
+    @PostMapping("/allowSendEmailTo{userName}")
+    public void allowSendEmail(@PathVariable("userName")String userName){
+        userService.allowSendEmailTrue(userName);
     }
 
     @PostMapping("/editPassword-{userLogin}")
@@ -57,41 +70,14 @@ public class UserRestController {
         userService.changePassword(userLogin, newPassword);
     }
 
-    @PostMapping("/editName-{userLogin}")
-    public void editNameOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String name){
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editNameOfUser(user, name);
+    @PostMapping("/admin/blockUser-{userLogin}")
+    public void blockUser(@PathVariable("userLogin")String userLogin){
+        userService.blockUser(userLogin);
     }
 
-    @PostMapping("/editSurname-{userLogin}")
-    public void editSurnameOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String surname){
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editSurnameOfUser(user, surname);
-    }
-
-    @PostMapping("/editPhone-{userLogin}")
-    public void editPhoneOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String phone){
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editPhoneOfUser(user, phone);
-    }
-
-    @PostMapping("/editCountry-{userLogin}")
-    public void editCountryOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String country){
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editCountryOfUser(user, country);
-    }
-
-    @PostMapping("/editCity-{userLogin}")
-    public void editCityOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String city){
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editCityOfUser(user, city);
-    }
-
-    @PostMapping("/editZipCode-{userLogin}")
-    public void editZipCodeOfUser(@PathVariable("userLogin")String userLogin, @RequestBody String zipCode){
-        int buffZipCode = Integer.parseInt(zipCode);
-        User user = userService.findByName(userLogin);
-        describeOfUserService.editZipCodeOfUser(user, buffZipCode);
+    @PostMapping("/admin/unblockUser-{userLogin}")
+    public void unblockUser(@PathVariable("userLogin")String userLogin){
+        userService.unblockUser(userLogin);
     }
 
 }

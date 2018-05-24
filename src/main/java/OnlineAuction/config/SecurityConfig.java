@@ -67,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/logMe")
-                .successForwardUrl("/asd")
-
+                .successForwardUrl("/loginSuccess")
+                .failureForwardUrl("/loginSuccess")
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()

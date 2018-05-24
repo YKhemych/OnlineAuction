@@ -20,11 +20,14 @@ public interface PlumbService {
     List<Plumb> plumbWithoutConfirmed();
     Plumb findOneByIdWithPicture(int id);
     void confirmPlumb(int id);
+    void confirmDeliverPlumb(int id);
     List<Plumb> allActivePlumbs(Date currentDate, Pageable pageRequest);
     List<Plumb> findPlumbByCategoryWithPictureAndPhoto(Category category, Pageable pageRequest);
     List<Plumb> findAllPlumbByAuthorWithPictureAndPhoto(Author author, Pageable pageRequest);
     int countPlumbByCategory(Category category);
+    int countPlumbsByAuthor(Author author);
     int countActivePlumb(Date currentDate);
     List<Plumb> findAllPlumbWithPicture();
     List<Plumb> findPlumbByUser(User user, Pageable pageRequest);
+    void resetPlumb(int id, Date dateOfEnd, Date currentDate);
 }

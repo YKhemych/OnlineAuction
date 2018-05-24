@@ -7,10 +7,9 @@
             <div class="row">
                 <div class="col-md-12 margin-top-10px row">
 
-                    <%--<div class="padding-0-10px border-bottom-blond-grey col-md-12 col-xs-12">--%>
-                    <%--<h1 class="float-left font-size-25px col-md-12 col-xs-12"> ${fatherCategory.name} </h1>--%>
-                    <%--<h1 id="activeCategoryId" class="visibility-hidden float-left margin-0" style="font-size: 0px">${fatherCategory.id}</h1>--%>
-                    <%--</div>--%>
+                    <div class="padding-0-10px border-bottom-blond-grey col-md-12 col-xs-12">
+                        <h3 class="float-left font-size-25px col-md-12 col-xs-12 white-space-nowrap text-align-center"> ${headlineText} </h3>
+                    </div>
 
                     <div id="allPlumbs" class="padding-10px-0 col-md-12">
                         <c:forEach items="${plumbs}" var="plumb">
@@ -36,7 +35,7 @@
                                             </c:forEach>
                                         </c:if>
                                         <c:if test="${plumb.dateOfEnd < currentDate}">
-                                            <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Продано</p>
+                                            <p class="col-md-12 margin-0 padding-bottom-5px font-size-14px-Lato white-space-pre-wrap">Продано</p>
                                         </c:if>
                                     </div>
 

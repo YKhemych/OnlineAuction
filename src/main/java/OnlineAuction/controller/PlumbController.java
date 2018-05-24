@@ -59,13 +59,10 @@ public class PlumbController {
         User user = userService.findByName(userName);
         String[] splitDate = stringDateOfEnd.split("T");
         stringDateOfEnd = splitDate[0] + " " + splitDate[1];
-//        System.out.println(stringDateOfEnd);
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("yyyy-MM-dd hh:mm");
         Date dateOfEnd = format.parse(stringDateOfEnd);
-//        System.out.println(date);
         Date currentDate = new Date();
-//        System.out.println(currentDate);
         Plumb plumb = new Plumb(picture, user, price,currentDate,dateOfEnd,false);
         plumbService.save(plumb);
         return "redirect:/userPage" + userName;
@@ -88,10 +85,10 @@ public class PlumbController {
     @GetMapping("/plumb{id}")
     public String plumbWithId(@PathVariable("id")int id, Model model){
         Plumb plumb = plumbService.findOneByIdWithPicture(id);
-//        System.out.println(plumb);
         Picture picture = plumb.getPicture();
-//        System.out.println(picture);
         List<PicturePhoto> picturePhotos = picturePhotoService.findAllByPicture(picture);
+        plumb.setBets(new ArrayList<Bet>());
+        plumb.addBet(betService.findMaxBet(plumb));
         model.addAttribute("plumb", plumb);
         model.addAttribute("picture", picture);
         model.addAttribute("picturePhotos", picturePhotos);
@@ -101,7 +98,6 @@ public class PlumbController {
 
     @GetMapping("/confirmPlumb{id}")
     public String confirmPlumb(@PathVariable("id")int id){
-        System.out.println(id);
         plumbService.confirmPlumb(id);
         return "adminPage";
     }
@@ -117,7 +113,7 @@ public class PlumbController {
             plumb.addBet(bet);
         }
         int maxPage = (int) Math.ceil((plumbService.countPlumbByCategory(category) - 1) / 20 + 1);
-        System.out.println(maxPage);
+        model.addAttribute("headlineText", "Розділ " + category.getName());
         model.addAttribute("maxPage", maxPage);
         model.addAttribute("plumbsPage", page);
         model.addAttribute("categoryId", categoryId);
@@ -131,17 +127,17 @@ public class PlumbController {
         Date currentDate = new Date();
         List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.allActivePlumbs(currentDate, new PageRequest(page, 20)));
         for (Plumb plumb: plumbs) {
+            plumb.getPicture().setPicturePhotos(picturePhotoService.findAllByPicture(plumb.getPicture()));
             Bet bet = betService.findMaxBet(plumb);
             plumb.setBets(new ArrayList<Bet>());
             plumb.addBet(bet);
         }
         int maxPage = (int) Math.ceil((plumbService.countActivePlumb(currentDate) - 1) / 20 + 1);
+        model.addAttribute("headlineText", "Активні лоти");
         model.addAttribute("maxPage", maxPage);
         model.addAttribute("plumbsPage", page);
         model.addAttribute("plumbs", plumbs);
         model.addAttribute("currentDate", currentDate);
         return "listPlumbs";
     }
-
-
 }

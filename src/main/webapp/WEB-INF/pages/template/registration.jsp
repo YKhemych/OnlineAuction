@@ -10,11 +10,10 @@
             <div id="divRegistrationUser" class="modal-body">
                 <form action="/saveUser" method="post" class="row centered">
                     <input id="regUsername" type="text" name="username" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="User Name">
-                    <div id="divForErrorUserName" class="col-md-10 col-md-offset-1 padding-left-20px"></div>
                     <input id="regEmail" type="email" name="email" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Email">
                     <input id="regPassword" type="password" name="password" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Create password">
                     <input id="conPassword" type="password" name="password" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Confirm password">
-                    <div id="divForErrorPassword" class="col-md-10 col-md-offset-1 padding-left-20px"></div>
+                    <div id="divForError" class="col-md-10 col-md-offset-1 padding-left-20px"></div>
                     <input type="hidden"
                            name="${_csrf.parameterName}"
                            value="${_csrf.token}" >

@@ -51,31 +51,14 @@ public class Picture {
         this.descriptions = description;
     }
 
-    public Picture() {
-    }
-
-    public Picture(String name, String size, String year) {
-        this.name = name;
-        this.size = size;
-        this.year = year;
-    }
+    public Picture() {}
 
     public int getId() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "Picture{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", size='" + size + '\'' +
-                ", year='" + year + '\'' +
-                ", material='" + material + '\'' +
-                ", conditions='" + conditions + '\'' +
-                ", descriptions='" + descriptions + '\'' +
-//                ", picturePhotos='" + picturePhotos + '\'' +
-//                ", plumb='" + plumb + '\'' +
-                '}';
+    public void setPicturePhotos(List<PicturePhoto> picturePhotos) {
+        this.picturePhotos = picturePhotos;
     }
+
 }

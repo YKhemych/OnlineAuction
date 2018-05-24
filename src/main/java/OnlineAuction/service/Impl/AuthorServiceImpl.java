@@ -46,4 +46,9 @@ public class AuthorServiceImpl implements AuthorService {
         return authorDAO.findAuthorByName(name);
     }
 
+    @Override
+    public void editBiography(String biography, int id) {
+        authorDAO.editBiography(biography, id);
+    }
+
 }

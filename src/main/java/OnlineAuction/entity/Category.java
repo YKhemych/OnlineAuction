@@ -29,12 +29,4 @@ public class Category {
         this.idFatherCategories = 0;
     }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", idFatherCategories=" + idFatherCategories +
-                '}';
-    }
 }

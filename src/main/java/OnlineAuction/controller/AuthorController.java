@@ -61,8 +61,11 @@ public class AuthorController {
     public String authorWithId(@PathVariable("id")int id, @PathVariable("page")int page, Model model){
         Author author = authorService.findOne(id);
         List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.findAllPlumbByAuthorWithPictureAndPhoto(author, new PageRequest(page, 12)));
+        int maxPage = (int) Math.ceil((plumbService.countPlumbsByAuthor(author) - 1) / 20 + 1);
+        model.addAttribute("maxPage", maxPage);
         model.addAttribute("author", author);
         model.addAttribute("plumbs", plumbs);
+        model.addAttribute("authorsPage", page);
         model.addAttribute("currentDate", new Date());
         return "authorPage";
     }
