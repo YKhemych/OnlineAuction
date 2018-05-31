@@ -2,8 +2,10 @@ package OnlineAuction.controller;
 
 import OnlineAuction.dao.AuthorDAO;
 import OnlineAuction.entity.Author;
+import OnlineAuction.entity.Bet;
 import OnlineAuction.entity.Plumb;
 import OnlineAuction.service.AuthorService;
+import OnlineAuction.service.BetService;
 import OnlineAuction.service.PlumbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +27,8 @@ public class AuthorController {
     private AuthorService authorService;
     @Autowired
     private PlumbService plumbService;
+    @Autowired
+    private BetService betService;
 
     @GetMapping("/admin/createAuthor")
     public String createAuthor(){
@@ -61,6 +65,11 @@ public class AuthorController {
     public String authorWithId(@PathVariable("id")int id, @PathVariable("page")int page, Model model){
         Author author = authorService.findOne(id);
         List<Plumb> plumbs = new ArrayList<Plumb>(plumbService.findAllPlumbByAuthorWithPictureAndPhoto(author, new PageRequest(page, 12)));
+        for (Plumb plumb: plumbs) {
+            Bet bet = betService.findMaxBet(plumb);
+            plumb.setBets(new ArrayList<Bet>());
+            plumb.addBet(bet);
+        }
         int maxPage = (int) Math.ceil((plumbService.countPlumbsByAuthor(author) - 1) / 20 + 1);
         model.addAttribute("maxPage", maxPage);
         model.addAttribute("author", author);

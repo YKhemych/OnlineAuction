@@ -69,7 +69,7 @@
                         </c:if>
                     </c:if>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 padding-bottom-20px">
                         <h3 class="padding-bottom-10px padding-left-20px"> Опис </h3>
                         <p class="display-i-b white-space-pre-wrap">Власник: </p><a id="owner" href="/userPage${plumb.user.username}" class="color-dark-grey">${plumb.user.username}</a>
                         <br>

@@ -50,7 +50,7 @@
                             <li>
                                 <a id="aPreviousPage" <c:if test="${plumbsPage != 0}">
                                     href ="allActivePlumb-Page${plumbsPage - 1}"
-                                </c:if> class="border-l-radius-45px" >&laquo;</a>
+                                </c:if> class="btn border-l-radius-45px" >&laquo;</a>
                             </li>
                             <c:if test="${plumbsPage > 2}">
                                 <li><a href="allActivePlumb-Page0" class="text-danger"> 1 </a></li>
@@ -76,7 +76,7 @@
                             <li>
                                 <a id="aNextPage" <c:if test="${plumbsPage + 1 != maxPage}">
                                     href="allActivePlumb-Page${plumbsPage + 1}"
-                                </c:if> class="border-r-radius-45px">&raquo;</a>
+                                </c:if> class="btn border-r-radius-45px">&raquo;</a>
                             </li>
                         </ul>
                     </div>

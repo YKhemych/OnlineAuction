@@ -27,7 +27,7 @@ function changePassword() {
         contentType: 'text/plain',
         data : randomCode,
         success : function () {
-            alert("oK");
+            console.log("Confirmation code was sent")
         },
         error : function () {
             alert("!!!!");

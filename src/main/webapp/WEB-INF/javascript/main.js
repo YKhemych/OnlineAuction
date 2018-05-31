@@ -14,7 +14,7 @@ $('#registerButton').click(function () {
     if (password == confPassword){
         var user = {username: username, email: email, password: password};
         var jsonUser = JSON.stringify(user);
-        $('#errorInPassword').empty();
+        $('#divForErrorInRegistration').children().remove();
         $.ajax({
             url: '/saveUser',
             type: 'post',
@@ -29,8 +29,8 @@ $('#registerButton').click(function () {
                     document.getElementById("closeRegistration").click();
                 }else{
                     if (result == "username"){
-                        $('#divForError').children().remove();
-                        $('#divForError').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Користувач з таким іменем вже існує"}));
+                        $('#divForErrorInRegistration').children().remove();
+                        $('#divForErrorInRegistration').append($('<p/>', {class: "margin-0 padding-top-10px", text: "Користувач з таким іменем вже існує"}));
                     }
                 }
 
@@ -41,8 +41,8 @@ $('#registerButton').click(function () {
         });
 
     }else {
-        $('#divForError').children().remove();
-        $('#divForError').append($('<p/>', {id: "errorInPassword",class: "margin-0 padding-top-10px", text: "Паролі не збігаються"}));
+        $('#divForErrorInRegistration').empty();
+        $('#divForErrorInRegistration').append($('<p/>', {id:"errorInPassword", class:"margin-0 padding-top-10px", text:"Паролі не збігаються"}));
     }
 
 });

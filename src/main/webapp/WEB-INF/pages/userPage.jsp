@@ -2,7 +2,7 @@
 <%@include file="template/header.jsp"%>
 
 
-<div class="container-fluid background-blond-grey" style="min-height: 600px">
+<div class="container-fluid background-blond-grey" style="min-height: 480px">
     <div class="row centered padding-top-15px padding-bottom-20px">
         <div id="headline" class="col-md-10 col-md-offset-1">
             <h3 id="nameOfUser" class="display-i-b col-md-offset-5">${user.username}</h3>
@@ -86,46 +86,48 @@
                     <a id="createPlumb" href="/createPlumb" class="col-md-4 col-md-offset-4 btn border-radius-90px background-red color-white hover-back-gren outline-none">СТВОРИТИ ЛОТ</a>
                 </c:if>
             </div>
-            <div id="plumbWhichAddedByUser" class="margin-top-10px padding-5-15-0-15px background-white overflow-hidden border-radius-45px row">
-                <h3 class="text-align-center padding-bottom-20px">Лоти додані користувачем ${user.username}</h3>
-                <div id="addedPlumbs" class="col-md-12">
-                    <c:forEach items="${plumbsWhichAddedByUser}" var="plumb">
-                        <c:set var="picture" value="${plumb.picture}"/>
-                        <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
-                            <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
-                                <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
-                                    <img src="${picturePhoto.photo}" class="img-responsive width-100prc">
-                                </c:forEach>
-                                <div class="row caption margin-0 padding-0 display-block height-auto">
-                                    <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}</h4>
-                                    <c:if test="${plumb.confirmed == true}">
-                                        <c:if test="${plumb.dateOfEnd > currentDate}">
-                                            <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Стартова ціна</p>
-                                            <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
-                                            <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
-                                            <c:forEach items="${plumb.bets}" var="bet" end="1">
-                                                <c:if test="${bet.price > 0}">
-                                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato">${bet.price} грн</p>
-                                                </c:if>
-                                                <c:if test="${bet == null}">
-                                                    <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
-                                                </c:if>
-                                            </c:forEach>
+            <c:if test="${describeOfUser != null}">
+                <div id="plumbWhichAddedByUser" class="margin-top-10px padding-5-15-0-15px background-white overflow-hidden border-radius-45px row">
+                    <h3 class="text-align-center padding-bottom-20px">Лоти додані користувачем ${user.username}</h3>
+                    <div id="addedPlumbs" class="col-md-12">
+                        <c:forEach items="${plumbsWhichAddedByUser}" var="plumb">
+                            <c:set var="picture" value="${plumb.picture}"/>
+                            <div class="col-xs-6 col-md-3 padding-5-15-0-15px">
+                                <a href="/plumb${plumb.id}" class="thumbnail btn padding-0 border-radius-10px overflow-hidden background-blond-grey">
+                                    <c:forEach items="${picture.picturePhotos}" var="picturePhoto" end="0">
+                                        <img src="${picturePhoto.photo}" class="img-responsive width-100prc">
+                                    </c:forEach>
+                                    <div class="row caption margin-0 padding-0 display-block height-auto">
+                                        <h4 class="hover-cl-gren white-space-pre-wrap padding-bottom-10px padding-top-10px margin-0 color-red">${picture.name}</h4>
+                                        <c:if test="${plumb.confirmed == true}">
+                                            <c:if test="${plumb.dateOfEnd > currentDate}">
+                                                <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Стартова ціна</p>
+                                                <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
+                                                <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
+                                                <c:forEach items="${plumb.bets}" var="bet" end="1">
+                                                    <c:if test="${bet.price > 0}">
+                                                        <p class="col-md-6 font-weight-bold font-size-14px-Lato">${bet.price} грн</p>
+                                                    </c:if>
+                                                    <c:if test="${bet == null}">
+                                                        <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${plumb.dateOfEnd < currentDate}">
+                                                <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Продано</p>
+                                            </c:if>
                                         </c:if>
-                                        <c:if test="${plumb.dateOfEnd < currentDate}">
-                                            <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Продано</p>
+                                        <c:if test="${plumb.confirmed == false}">
+                                            <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Не підтверджено</p>
                                         </c:if>
-                                    </c:if>
-                                    <c:if test="${plumb.confirmed == false}">
-                                        <p class="col-md-12 margin-0 font-size-14px-Lato white-space-pre-wrap">Не підтверджено</p>
-                                    </c:if>
-                                </div>
+                                    </div>
 
-                            </a>
-                        </div>
-                    </c:forEach>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
-            </div>
+            </c:if>
         </div>
 
     </div>

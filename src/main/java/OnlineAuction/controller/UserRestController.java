@@ -44,7 +44,6 @@ public class UserRestController {
             userService.save(user);
             return null;
         }
-
     }
 
     @PostMapping("/editEmail-{userLogin}")

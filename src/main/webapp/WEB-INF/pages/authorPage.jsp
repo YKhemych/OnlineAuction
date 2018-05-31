@@ -18,7 +18,7 @@
                 <div class="col-md-7 padding-left-20px">
                     <p id="authorId" class="hide">${author.id}</p>
                     <h3 class="text-align-center padding-top-5px padding-bottom-10px margin-0">${author.name}</h3>
-                    <p id="biography">${author.biography}</p>
+                    <p class="white-space-pre-wrap" id="biography">${author.biography}</p>
                 </div>
             </div>
 
@@ -38,7 +38,14 @@
                                         <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Початкова ціна</p>
                                         <p class="col-md-6 margin-0 font-size-14px-Lato white-space-pre-wrap">Поточна ціна</p>
                                         <p class="col-md-6 font-weight-bold font-size-14px-Lato"> ${plumb.minPrise} грн </p>
-                                        <p class="col-md-6 font-weight-bold font-size-14px-Lato"> 205 грн </p>
+                                        <c:forEach items="${plumb.bets}" var="bet" end="0">
+                                            <c:if test="${bet.price > 0}">
+                                                <p class="col-md-6 font-weight-bold font-size-14px-Lato">${bet.price} грн</p>
+                                            </c:if>
+                                            <c:if test="${bet == null}">
+                                                <p class="col-md-6 font-weight-bold font-size-14px-Lato">${plumb.minPrise} грн</p>
+                                            </c:if>
+                                        </c:forEach>
                                     </c:if>
                                     <c:if test="${plumb.dateOfEnd < currentDate}">
                                         <p class="col-md-12 margin-0 padding-bottom-5px font-size-14px-Lato white-space-pre-wrap">Продано</p>
@@ -54,33 +61,33 @@
                     <ul id="pagination" class="pagination">
                         <li>
                             <a id="aPreviousPage" <c:if test="${authorsPage != 0}">
-                                href ="allAuthorsPage-${authorsPage - 1}"
+                                href ="/authorWithId${author.id}/Page${authorsPage - 1}"
                             </c:if> class="btn border-l-radius-45px" >&laquo;</a>
                         </li>
                         <c:if test="${authorsPage > 2}">
-                            <li><a href="allAuthorsPage-0" class="btn text-danger"> 1 </a></li>
+                            <li><a href="/authorWithId${author.id}/Page0" class="text-danger"> 1 </a></li>
                         </c:if>
                         <c:if test="${authorsPage > 1}">
-                            <li><a href="allAuthorsPage-${authorsPage - 2}" class="btn text-danger"> ${authorsPage - 1} </a></li>
+                            <li><a href="/authorWithId${author.id}/Page${authorsPage - 2}" class="text-danger"> ${authorsPage - 1} </a></li>
                         </c:if>
                         <c:if test="${authorsPage > 0}">
-                            <li><a href="allAuthorsPage-${authorsPage - 1}" class="btn text-danger"> ${authorsPage} </a></li>
+                            <li><a href="/authorWithId${author.id}/Page${authorsPage - 1}" class="text-danger"> ${authorsPage} </a></li>
                         </c:if>
 
-                        <li class="active"><a id="activePage" class="btn" >${authorsPage + 1}</a></li>
+                        <li class="active"><a id="activePage" href="" >${authorsPage + 1}</a></li>
 
                         <c:if test="${(maxPage - authorsPage) > 2}">
-                            <li><a href="allAuthorsPage-${authorsPage + 1}" class="btn text-danger"> ${authorsPage + 2} </a></li>
+                            <li><a href="/authorWithId${author.id}/Page${authorsPage + 1}" class="text-danger"> ${authorsPage + 2} </a></li>
                         </c:if>
                         <c:if test="${(maxPage - authorsPage) > 3}">
-                            <li><a href="allAuthorsPage-${authorsPage + 2}" class="btn text-danger"> ${authorsPage + 3} </a></li>
+                            <li><a href="/authorWithId${author.id}/Page${authorsPage + 2}" class="text-danger"> ${authorsPage + 3} </a></li>
                         </c:if>
                         <c:if test="${authorsPage + 1 != maxPage}">
-                            <li><a id="maxPage" href="allAuthorsPage-${maxPage - 1}" class="btn text-danger"> ${maxPage} </a></li>
+                            <li><a id="maxPage" href="/authorWithId${author.id}/Page${maxPage - 1}" class="text-danger"> ${maxPage} </a></li>
                         </c:if>
                         <li>
                             <a id="aNextPage" <c:if test="${authorsPage + 1 != maxPage}">
-                                href="allAuthorsPage-${authorsPage + 1}"
+                                href="/authorWithId${author.id}/Page${authorsPage + 1}"
                             </c:if> class="btn border-r-radius-45px">&raquo;</a>
                         </li>
 

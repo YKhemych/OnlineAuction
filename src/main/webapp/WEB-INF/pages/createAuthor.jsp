@@ -28,7 +28,7 @@
                 <div class="col-md-12 col-xs-12 padding-bottom-20px margin-10-0 background-white overflow-hidden border-radius-45px">
                     <h3 class="text-align-center">Коротка біографія</h3>
                     <div id="divAuthorBiography" class="col-md-10 col-md-offset-1 margin-top-10px padding-5px background-blond-grey border-white border-radius-45px overflow-hidden">
-                        <textarea id="authorBiography" name="biography" form="saveAuthorForm" rows="7" type="text" class="col-md-12 padding-left-20px padding-top-5px outline-none background-blond-grey" placeholder="*"></textarea>
+                        <textarea id="authorBiography" name="biography" form="saveAuthorForm" rows="15" type="text" class="col-md-12 padding-left-20px padding-top-5px outline-none background-blond-grey" placeholder="*"></textarea>
                     </div>
                 </div>
 

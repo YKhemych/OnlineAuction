@@ -4,7 +4,7 @@
         <div class="modal-content background-dark-grey color-white">
             <div class="modal-header">
                 <button id="closeRegistration" class="close color-white" data-dismiss="modal">х</button>
-                <h4 class="modal-title">Регістрація</h4>
+                <h4 class="modal-title">Реєстрація</h4>
             </div>
 
             <div id="divRegistrationUser" class="modal-body">
@@ -13,7 +13,7 @@
                     <input id="regEmail" type="email" name="email" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Email">
                     <input id="regPassword" type="password" name="password" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Create password">
                     <input id="conPassword" type="password" name="password" class="col-md-10 col-md-offset-1 padding-left-20px margin-top-10px border-red border-radius-90px background-dark-grey outline-none" placeholder="Confirm password">
-                    <div id="divForError" class="col-md-10 col-md-offset-1 padding-left-20px"></div>
+                    <div id="divForErrorInRegistration" class="col-md-10 col-md-offset-1 padding-left-20px"></div>
                     <input type="hidden"
                            name="${_csrf.parameterName}"
                            value="${_csrf.token}" >
@@ -21,7 +21,7 @@
             </div>
 
             <div class="modal-footer">
-                <button id="registerButton" class="btn hover-back-gren padding-0-15px border-radius-90px background-red outline-none">Регістрація</button>
+                <button id="registerButton" class="btn hover-back-gren padding-0-15px border-radius-90px background-red outline-none">Зареєструватися</button>
             </div>
 
         </div>

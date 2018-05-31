@@ -30,7 +30,7 @@
                 <h4 class="border-bottom-middle-grey color-red padding-left-30px padding-bottom-10px hover-cl-gren">E-MAIL</h4>
                 <div class="col-md-12">
                     <span class="glyphicon glyphicon-envelope color-red display-i-b padding-0-15px padding-top-15px hover-cl-gren"></span>
-                    <p class="color-middel-grey display-i-b margin-top-10px hover-cl-gren font-size-14px-Lato"> support@gmail.com</p>
+                    <p class="color-middel-grey display-i-b margin-top-10px hover-cl-gren font-size-14px-Lato"> yosyp0108khemych@gmail.com</p>
                 </div>
             </div>
 

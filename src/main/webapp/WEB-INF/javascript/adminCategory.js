@@ -274,7 +274,7 @@ function confirmChangeCategory() {
             contentType: 'application/json',
             data : jsonCategoryRename,
             success:function () {
-                alert("RENAME ok");
+                console.log("RENAME ok");
             },
             error:function () {
                 alert("errrrrrrorrr!!!!!!!!!");
@@ -293,7 +293,7 @@ function confirmChangeCategory() {
             contentType: 'application/json',
             data : jsonCategoryChangeIDFC,
             success:function () {
-                alert("CHANGE IDFC ok");
+                console.log("CHANGE IDFC ok");
             },
             error:function () {
                 alert("errrrrrrorrr!!!!!!!!!");
